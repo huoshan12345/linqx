@@ -3082,3 +3082,4 @@ var Grouping = function (groupKey, elements) {
 Grouping.prototype = new ArrayEnumerable();
 
 export default Enumerable;
+export { Enumerable };

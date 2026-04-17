@@ -1,6 +1,6 @@
-# linq
+# linqx
 
-This is a JavaScript implementation of the .NET [LINQ](https://msdn.microsoft.com/en-us/library/bb308959.aspx) library.
+Fork of the original [linq](https://github.com/mihaifm/linq) for JavaScript, updated with modern improvements and API changes.
 
 It contains all the original .NET methods plus a few additions.
 
