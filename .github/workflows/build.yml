@@ -34,11 +34,18 @@ jobs:
         uses: suzuki-shunsuke/get-pr-action@v0.1.0
         id: pr
 
+      - name: Read version from package.json
+        shell: bash
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+
       - name: Print variables
         shell: pwsh
         run: |
           echo "merge_commit_sha: ${{ steps.pr.outputs.merge_commit_sha }}"
           echo "IS_PUSH_DEFAULT: ${{ env.IS_PUSH_DEFAULT }}"
+          echo "VERSION: ${{ env.VERSION }}"
 
       - name: Checkout
         uses: actions/checkout@v6
