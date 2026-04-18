@@ -6,10 +6,18 @@
     "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": [
+      "esnext"
+    ],
+    "types": [
+      "node",
+      "vitest/globals"
+    ],
   },
   "include": [
-    "*.ts"
+    "*.ts",
+    "test/**/*.ts"
   ],
   "exclude": [
     "dist",

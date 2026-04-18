@@ -11,8 +11,12 @@
     "url": "https://github.com/huoshan12345/linqx.git"
   },
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "tsc && shx cp linq.js dist && shx cp linq.d.ts dist",
-    "test": "node test/testrunner.js"
+    "type-check": "tsc --noEmit",
+    "test:ts": "run-p type-check && vitest run",
+    "test:js": "node test/testrunner.js",
+    "test": "run-p test:ts test:js"
   },
   "preferGlobal": false,
   "keywords": [
@@ -27,7 +31,10 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "devDependencies": {
+    "@types/node": "^25.6.0",
+    "npm-run-all2": "^8.0.4",
     "shx": "^0.4.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.4"
   }
 }
