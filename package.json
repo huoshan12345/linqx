@@ -11,17 +11,23 @@
     "url": "https://github.com/huoshan12345/linqx.git"
   },
   "scripts": {
+    "build": "tsc && shx cp linq.js dist && shx cp linq.d.ts dist",
     "test": "node test/testrunner.js"
   },
   "preferGlobal": false,
   "keywords": [
-    "linq", "linqx", "linqjs", "linqts"
+    "linq",
+    "linqx",
+    "linqjs",
+    "linqts"
   ],
-  "dependencies": {},
   "engines": {
     "node": "*"
   },
-  "main": "./linq.js",
-  "exports": "./linq.js",
-  "types": "./linq.d.ts"
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "devDependencies": {
+    "shx": "^0.4.0",
+    "typescript": "^6.0.3"
+  }
 }
