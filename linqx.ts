@@ -48,7 +48,6 @@ type IndexedItem<T> = Enumerable.IndexedItem<T>;
 type PositionedItem<T> = Enumerable.PositionedItem<T>;
 type ItemWithNeighbors<T> = Enumerable.ItemWithNeighbors<T>;
 
-// NOTE: 这里不能用defineFunction，虽然在dev下没问题，在build之后会找不到方法
 Enumerable.prototype.whereIf = function <T>(this: IEnumerable<T>, flag: boolean | string, filter: (t: T) => boolean): IEnumerable<T> {
   return flag ? this.where(filter) : this;
 };

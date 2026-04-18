@@ -25,4 +25,15 @@ describe("withNeighbors", () => {
       Enumerable.from([]).withNeighbors().toArray()
     ).toEqual([]);
   });
+
+  it('should correctly return neighbors for each element', () => {
+    const numbers = Enumerable.range(1, 5).toArray();
+    let i = 0;
+    for (const { prev, item, next } of Enumerable.from(numbers).withNeighbors()) {
+      expect(prev).toBe(i > 0 ? numbers[i - 1] : null);
+      expect(item).toBe(i + 1);
+      expect(next).toBe(i < numbers.length - 1 ? numbers[i + 1] : null);
+      i++;
+    }
+  });
 });

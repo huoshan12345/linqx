@@ -16,8 +16,7 @@
     ],
   },
   "include": [
-    "*.ts",
-    "test/**/*.ts"
+    "*.ts"
   ],
   "exclude": [
     "dist",

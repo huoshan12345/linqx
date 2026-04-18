@@ -6,3 +6,4 @@ obj
 linq.min.js
 release/*
 /dist
+/*.tgz
