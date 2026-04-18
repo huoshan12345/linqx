@@ -49,8 +49,11 @@ jobs:
         shell: bash
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          NAME=$(node -p "require('./package.json').name")
           echo "VERSION=$VERSION" >> "$GITHUB_ENV"
+          echo "NAME=$NAME" >> "$GITHUB_ENV"
           echo "VERSION: $VERSION"
+          echo "NAME: $NAME"
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v6
@@ -58,12 +61,20 @@ jobs:
           version: 10
 
       - name: Install dependencies with pnpm
-        working-directory: .
         run: pnpm install
 
       - name: Run tests with pnpm
-        working-directory: .
         run: pnpm test
+
+      - name: Publish with pnpm
+        if: ${{ env.IS_PUSH_DEFAULT == 'true' }}
+        run: |
+          if npm view "${{ env.NAME }}@${{ env.VERSION }}" version > /dev/null 2>&1; then            
+            echo "Version ${{ env.VERSION }} already exists on npm. Skipping publish."
+          else
+            echo "Publishing version ${{ env.VERSION }} to npm..."
+            pnpm publish --access public
+          fi
 
       - name: Create Tag
         if: ${{ env.IS_PUSH_DEFAULT == 'true' }}
