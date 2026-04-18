@@ -3,7 +3,7 @@
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
   "type": "module",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "license": "MIT",
   "homepage": "https://github.com/huoshan12345/linqx",
   "repository": {
