@@ -79,6 +79,7 @@ jobs:
             echo "Version ${{ env.VERSION }} already exists on npm. Skipping publish."
           else
             echo "Publishing version ${{ env.VERSION }} to npm..."
+            pnpm build
             pnpm publish --no-git-checks --access public --provenance
           fi
 
