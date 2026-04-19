@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import Enumerable from "../index";
+import { Enumerable } from "@/index.js";
 
 describe("whereIf", () => {
   it("filters when true", () => {
