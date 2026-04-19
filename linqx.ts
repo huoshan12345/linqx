@@ -1,6 +1,6 @@
-import { Enumerable } from "../linq.js";
+import { Enumerable } from "@/linq.js";
 
-declare module '../linq.js' {
+declare module '@/linq.js' {
   type IEnumerable<T> = Enumerable.IEnumerable<T>;
 
   namespace Enumerable {
