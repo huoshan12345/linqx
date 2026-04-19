@@ -1,9 +1,9 @@
 {
-  "name": "linqx",
+  "name": "@huoshan12345/linqx",
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
   "type": "module",
-  "version": "1.0.0",
+  "version": "0.1.8",
   "license": "MIT",
   "homepage": "https://github.com/huoshan12345/linqx",
   "repository": {
@@ -11,17 +11,38 @@
     "url": "https://github.com/huoshan12345/linqx.git"
   },
   "scripts": {
-    "test": "node test/testrunner.js"
+    "preinstall": "npx only-allow pnpm",
+    "clean": "shx rm -rf dist/** && shx rm -f *.tgz",
+    "copy": "shx cp linq.js dist && shx cp linq.d.ts dist",
+    "build": "run-s clean && tsc && run-s copy",
+    "type-check": "tsc --noEmit",
+    "test:ts": "run-s type-check && vitest run",
+    "test:js": "node test/testrunner.js",
+    "test": "run-p test:ts test:js"
   },
   "preferGlobal": false,
   "keywords": [
-    "linq", "linqx", "linqjs"
+    "linq",
+    "linqx",
+    "linqjs",
+    "linqts"
   ],
-  "dependencies": {},
   "engines": {
     "node": "*"
   },
-  "main": "./linq.js",
-  "exports": "./linq.js",
-  "types": "./linq.d.ts"
+  "main": "dist/index.js",
+  "exports": "./dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "npm-run-all2": "^8.0.4",
+    "shx": "^0.4.0",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.4"
+  }
 }
