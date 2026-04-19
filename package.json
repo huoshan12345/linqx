@@ -3,7 +3,7 @@
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "homepage": "https://github.com/huoshan12345/linqx",
   "repository": {
@@ -12,7 +12,9 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "build": "tsc && shx cp linq.js dist && shx cp linq.d.ts dist",
+    "clean": "shx rm -rf dist && shx rm *.tgz",
+    "copy": "shx cp linq.js dist && shx cp linq.d.ts dist",
+    "build": "run-p clean && tsc && run-p copy",
     "type-check": "tsc --noEmit",
     "test:ts": "run-p type-check && vitest run",
     "test:js": "node test/testrunner.js",
@@ -29,7 +31,19 @@
     "node": "*"
   },
   "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
   "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "devDependencies": {
     "@types/node": "^25.6.0",
     "npm-run-all2": "^8.0.4",

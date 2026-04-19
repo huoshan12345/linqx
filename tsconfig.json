@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "CommonJS",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
     "declaration": true,
     "outDir": "dist",
     "strict": true,
@@ -20,6 +21,7 @@
   ],
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "test"
   ]
 }
