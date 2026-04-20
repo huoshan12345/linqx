@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@phiberber/pinst':
+        specifier: ^3.0.1
+        version: 3.0.1
       '@types/node':
         specifier: ^25.6.0
         version: 25.6.0
@@ -58,6 +61,11 @@ packages:
 
   '@oxc-project/types@0.124.0':
     resolution: {integrity: sha512-VBFWMTBvHxS11Z5Lvlr3IWgrwhMTXV+Md+EQF0Xf60+wAdsGFTBx7X7K/hP4pi8N7dcm1RvcHwDxZ16Qx8keUg==}
+
+  '@phiberber/pinst@3.0.1':
+    resolution: {integrity: sha512-yfoB3cVOwUnvuGV1or568YlCiG6fF/AdztL1YK0/MFca2Y/9/XuMFz5Fq0KOGjByWPW6O2DOrDVlSk8fl+uoRA==}
+    engines: {node: '>=12.0.0'}
+    hasBin: true
 
   '@rolldown/binding-android-arm64@1.0.0-rc.15':
     resolution: {integrity: sha512-YYe6aWruPZDtHNpwu7+qAHEMbQ/yRl6atqb/AhznLTnD3UY99Q1jE7ihLSahNWkF4EqRPVC4SiR4O0UkLK02tA==}
@@ -753,6 +761,8 @@ snapshots:
       fastq: 1.20.1
 
   '@oxc-project/types@0.124.0': {}
+
+  '@phiberber/pinst@3.0.1': {}
 
   '@rolldown/binding-android-arm64@1.0.0-rc.15':
     optional: true

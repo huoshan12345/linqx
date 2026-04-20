@@ -3,7 +3,7 @@
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
   "type": "module",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "license": "MIT",
   "homepage": "https://github.com/huoshan12345/linqx",
   "repository": {
@@ -11,6 +11,8 @@
     "url": "https://github.com/huoshan12345/linqx.git"
   },
   "scripts": {
+    "prepack": "pinst --disable",
+    "postpack": "pinst --enable",
     "preinstall": "npx only-allow pnpm",
     "clean": "shx rm -rf dist/** && shx rm -f *.tgz",
     "copy": "shx cp linq.js dist && shx cp linq.d.ts dist",
@@ -39,6 +41,7 @@
     "LICENSE"
   ],
   "devDependencies": {
+    "@phiberber/pinst": "^3.0.1",
     "@types/node": "^25.6.0",
     "npm-run-all2": "^8.0.4",
     "shx": "^0.4.0",
