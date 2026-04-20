@@ -1,5 +1,5 @@
 {
-  "name": "@huoshan12345/linqx",
+  "name": "linqx",
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
   "type": "module",
