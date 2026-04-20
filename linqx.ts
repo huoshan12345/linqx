@@ -25,7 +25,7 @@ declare module './linq.js' {
       next: T | null;
     }
 
-    const prototype: any;
+    export const prototype: any;
 
     interface IEnumerable<T> {
       whereIf(flag: boolean | string | undefined | null, filter: (t: T) => boolean): IEnumerable<T>;

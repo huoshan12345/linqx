@@ -1,151 +1,182 @@
 # linqx
 
-Fork of the original [linq](https://github.com/mihaifm/linq) for JavaScript, updated with modern improvements and API changes.
+Modern fork of the original [linq](https://github.com/mihaifm/linq) for JavaScript.
 
-It contains all the original .NET methods plus a few additions.
+linqx keeps the familiar LINQ-style API while adding modern exports, new utility methods, improved TypeScript support, and active maintenance.
 
-Written in pure JavaScript with no dependencies.
+Written in pure JavaScript with no runtime dependencies.
 
-## Examples
+---
 
-```js
-// C# LINQ - delegate
-Enumerable.Range(1, 10)
-    .Where(delegate(int i) { return i % 3 == 0; })
-    .Select(delegate(int i) { return i * 10; });
+# Key Differences from linq
 
-// linq.js - anonymous function
-Enumerable.range(1, 10)
-    .where(function(i) { return i % 3 == 0; })
-    .select(function(i) { return i * 10; });
+## 1. Named Export Added
+
+The original package only exposed a default export.
+
+linqx also provides:
+
+```ts
+export { Enumerable };
 ```
 
-```js
-// C# LINQ - lambda
-Enumerable.Range(1, 10).Where((i) => i % 3 == 0).Select((i) => i * 10);
+This makes extensions, wrappers, and custom integrations cleaner and more flexible for `typescript`.
 
-// linq.js - arrow function
-Enumerable.range(1, 10).where((i) => i % 3 == 0).select((i) => i * 10);
+Example:
+
+```ts
+// enumerable.extensions.ts
+import { Enumerable } from "linqx";
+
+declare module "linqx" {
+  namespace Enumerable {
+    export function crossJoin<T>(this: Enumerable.IEnumerable<T>): Enumerable.IEnumerable<{ left: T; right: T; }>;
+  }
+}
+
+Enumerable.prototype.crossJoin = function <T>(this: Enumerable.IEnumerable<T>): Enumerable.IEnumerable<{ left: T; right: T; }> {
+  return Enumerable.from(crossJoinIterator(this));
+
+  function* crossJoinIterator(enumerable: Enumerable.IEnumerable<T>): Iterable<{ left: T; right: T; }> {
+    for (const item of enumerable) {
+      for (const otherItem of enumerable) {
+        yield { left: item, right: otherItem };
+      }
+    }
+  }
+};
 ```
 
-```js
-// C# LINQ - anonymous type
-array.Select((val, i) => new { Value: val, Index: i }());
+Useful when augmenting prototypes or writing reusable helpers.
 
-// linq.js - object literal
-Enumerable.from(array).select((val, i) => ({ value: val, index: i }));
+---
+
+## 2. Additional APIs
+
+linqx adds practical methods not available in the original package.
+
+
+```ts
+whereIf(flag, predicate)
+page(pageNumber, pageSize)
+page({ pageNumber, pageSize })
+joinWith(separator)
+toMap(keySelector, valueSelector)
+chunk(size)
+index()
+position()
+withNeighbors()
 ```
 
-See [sample/tutorial.js](https://github.com/mihaifm/linq/blob/master/sample/tutorial.js) and the [test](https://github.com/mihaifm/linq/tree/master/test) folder for more examples.
+---
+
+# Installation
+
+```bash
+npm install linqx
+```
+
+---
 
 # Usage
 
-## Node.js (ES modules)
+## ES Modules 
 
-Install the latest version of the library with npm:
+```ts
+import Enumerable from "linqx";
 
-    npm install linq
-
-Load it in your code with the `import` syntax:
-
-```js
-import Enumerable from 'linq'
-
-let result = Enumerable.range(1, 10).where(i => i % 3 == 0).select(i => i * 10)
-console.log(result.toArray()) // [ 30, 60, 90 ]
+const result = Enumerable
+  .range(1, 10)
+  .where(x => x % 3 === 0)
+  .select(x => x * 10)
+  .toArray();
 ```
 
-Because the library is an ES module, this code will only work if your project is also configured as an ES module. Add the following line in your `package.json` to make it an ES module:
+---
 
-```json
-"type": "module"
+## Named Export
+
+```ts
+import { Enumerable } from "linqx";
+
+const values = Enumerable.from([1, 2, 3]);
 ```
 
-If you're not planning to use ES modules, check the CommonJS section below.
-
-## Node.js (CommonJS modules)
-
-Install version 3 of this library:
-
-    npm install linq@3
-
-Load it with the `require` syntax:
-
-```js
-const Enumerable = require('linq')
-
-let count = Enumerable.range(1, 10).count(i => i < 5)
-console.log(count) // 4
-```
-
-The [cjs](https://github.com/mihaifm/linq/tree/cjs) branch contains the source code for the CommonJS version of the library.
+---
 
 ## TypeScript
 
-Install the latest version of the library with npm.
+```ts
+import Enumerable from "linqx";
 
-Configure your compiler options in `tsconfig.json`
-
-```json
-"compilerOptions": {
-    "target": "ES2020",
-    "moduleResolution": "node"
-}
+const items: Enumerable.IEnumerable<number> =
+  Enumerable.from([1, 2, 3]);
 ```
 
-The library comes with a `d.ts` file containing type definitions for all the objects and methods, feel free to use them in your code:
+---
+
+# New API Examples
+
+## whereIf
 
 ```ts
-import Enumerable from 'linq';
-
-type tnum = Enumerable.IEnumerable<number>;
-let x: tnum = Enumerable.from([1, 2, 3]);
+Enumerable
+  .from([1, 2, 3, 4])
+  .whereIf(true, x => x > 2)
+  .toArray();
 ```
 
-## Deno
-
-Import the library from deno.land. Use the `@deno-types` annotation to load type definitions:
+## chunk
 
 ```ts
-// @deno-types="https://deno.land/x/linq@4.0.0/linq.d.ts"
-import Enumerable from 'https://deno.land/x/linq@4.0.0/linq.js'
-
-let radius = Enumerable.toInfinity(1).where(r => r * r * Math.PI > 10000).first()
+Enumerable
+  .from([1, 2, 3, 4, 5])
+  .chunk(2)
+  .toArray();
 ```
 
-You can also install locally with npm. Use the full file path when importing the library:
+Result:
 
 ```ts
-// @deno-types="./node_modules/linq/linq.d.ts"
-import Enumerable from './node_modules/linq/linq.js'
+[[1, 2], [3, 4], [5]]
 ```
 
-## Browser
+## withNeighbors
 
-The minified version of the library is available in the [release](https://github.com/mihaifm/linq/releases/latest) archive.
-
-Load it via `<script type="module">`:
-
-```html
-<script type="module" src="./linq.min.js"></script>
-<script type="module">
-    import Enumerable from './linq.min.js'
-    Enumerable.from([1, 2, 3]).forEach(x => console.log(x))
-</script>
+```ts
+Enumerable
+  .from([10, 20, 30])
+  .withNeighbors()
+  .toArray();
 ```
 
-You can also load the library via a CDN:
+---
 
-|        CDN | URL                                        |
-| ---------: | :----------------------------------------- |
-| unpkg      | <https://unpkg.com/linq/>                  |
-| jsDelivr   | <https://jsdelivr.com/package/npm/linq>    |
-| packd      | <https://bundle.run/linq@latest?name=linq> |
+# Migration from linq
+
+Most projects can switch directly:
+
+```diff
+-import Enumerable from "linq";
++import Enumerable from "linqx";
+```
+
+---
+
+# Repository
+
+https://github.com/huoshan12345/linqx
+
+---
 
 # Credits
 
-[Yoshifumi Kawai](https://github.com/neuecc) developed the [original version](https://github.com/neuecc/linq.js/) of this library.
+Based on the original work by Yoshifumi Kawai and later linq maintainers.
+
+Independent community fork.
+
+---
 
 # License
 
-[MIT License](https://github.com/mihaifm/linq/blob/master/LICENSE)
+MIT
