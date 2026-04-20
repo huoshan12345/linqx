@@ -25,4 +25,26 @@ describe("position", () => {
       Enumerable.from([]).position().toArray()
     ).toEqual([]);
   });
+
+  it("for of loop", () => {
+    for (const { index, item, isFirst, isLast } of Enumerable.from(["a", "b", "c"]).position()) {
+      switch (index) {
+        case 0:
+          expect(item).toBe("a");
+          expect(isFirst).toBe(true);
+          expect(isLast).toBe(false);
+          break;
+        case 1:
+          expect(item).toBe("b");
+          expect(isFirst).toBe(false);
+          expect(isLast).toBe(false);
+          break;
+        case 2:
+          expect(item).toBe("c");
+          expect(isFirst).toBe(false);
+          expect(isLast).toBe(true);
+          break;
+      }
+    }
+  });
 });

@@ -109,47 +109,34 @@ const values = Enumerable.from([1, 2, 3]);
 ```ts
 import Enumerable from "linqx";
 
-const items: Enumerable.IEnumerable<number> =
-  Enumerable.from([1, 2, 3]);
+const items: Enumerable.IEnumerable<number> = Enumerable.from([1, 2, 3]);
 ```
-
 ---
 
-# New API Examples
-
-## whereIf
+## New API Examples
 
 ```ts
+// whereIf
 Enumerable
   .from([1, 2, 3, 4])
   .whereIf(true, x => x > 2)
   .toArray();
-```
 
-## chunk
-
-```ts
+// chunk
 Enumerable
   .from([1, 2, 3, 4, 5])
   .chunk(2)
   .toArray();
+// result: [[1, 2], [3, 4], [5]]
+
+// withNeighbors
+for (const { prev, item, next } of Enumerable.from([10, 20, 30]).withNeighbors()) {
+}
+
+// position
+for (const { index, item, isFirst, isLast } of Enumerable.from(["a", "b", "c"]).position()) {  
+}
 ```
-
-Result:
-
-```ts
-[[1, 2], [3, 4], [5]]
-```
-
-## withNeighbors
-
-```ts
-Enumerable
-  .from([10, 20, 30])
-  .withNeighbors()
-  .toArray();
-```
-
 ---
 
 # Migration from linq
