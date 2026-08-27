@@ -20,7 +20,8 @@
     "type-check": "tsc --noEmit",
     "test:ts": "run-s type-check && vitest run",
     "test:js": "node test/testrunner.js",
-    "test": "run-p test:ts test:js"
+    "test": "run-p test:ts test:js",
+    "ncu": "npx npm-check-updates -u"
   },
   "preferGlobal": false,
   "keywords": [
@@ -42,10 +43,10 @@
   ],
   "devDependencies": {
     "@phiberber/pinst": "^3.0.1",
-    "@types/node": "^25.6.0",
-    "npm-run-all2": "^8.0.4",
+    "@types/node": "^26.4.0",
+    "npm-run-all2": "^9.0.3",
     "shx": "^0.4.0",
     "typescript": "^6.0.3",
-    "vitest": "^4.1.4"
+    "vitest": "^4.1.11"
   }
 }
