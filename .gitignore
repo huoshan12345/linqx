@@ -1,9 +1,4 @@
-.vscode
-.vs
 node_modules
-bin
-obj
-linq.min.js
-release/*
-/dist
-/*.tgz
+dist
+coverage
+*.tgz
