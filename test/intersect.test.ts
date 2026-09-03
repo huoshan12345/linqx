@@ -1,17 +1,16 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Set", () => {
   test("intersect", function () {
     let actual: unknown = Enumerable.from([1, 3, 5, 6, 6, 3, 4, 3, 2, 9])
       .intersect([4, 6, 2, 7, 8, 10, 11])
       .toArray();
-    deepEqual(actual, [6, 4, 2]);
+    expect(actual).toEqual([6, 4, 2]);
     actual = Enumerable.range(1, 10).select((value) => ({ test: value % 3 }))
       .intersect(Enumerable.range(1, 10).select((value) => ({ test: value % 2 })), (value) => value.test)
       .toArray();
-    deepEqual(actual, [{ test: 1 }, { test: 0 }]);
+    expect(actual).toEqual([{ test: 1 }, { test: 0 }]);
   });
 });
 test('intersect emits each matching comparison key once', () => {

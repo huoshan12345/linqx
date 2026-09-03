@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, test } from './test-utils.js';
 
 describe("ErrorHandling", () => {
   test("finallyAction", function () {
@@ -17,8 +16,8 @@ describe("ErrorHandling", () => {
         msg += "f";
       })
       .toArray();
-    deepEqual(actual, [1, 2, 3, 4]);
-    equal(msg, "aiueof");
+    expect(actual).toEqual([1, 2, 3, 4]);
+    expect(msg).toBe("aiueof");
   });
 });
 test('finallyAction runs after normal completion', () => {

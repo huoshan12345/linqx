@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Projection", () => {
   test("traverseDepthFirst", function () {
@@ -8,7 +7,7 @@ describe("Projection", () => {
       .traverseDepthFirst(value => Enumerable.make(value + value))
       .take(7)
       .toArray();
-    deepEqual(values, [1, 2, 4, 8, 16, 32, 64]);
+    expect(values).toEqual([1, 2, 4, 8, 16, 32, 64]);
 
     const valuesWithLevels = Enumerable.make(1)
       .traverseDepthFirst(
@@ -16,7 +15,7 @@ describe("Projection", () => {
         (value, level) => ({ value, level }))
       .take(3)
       .toArray();
-    deepEqual(valuesWithLevels, [
+    expect(valuesWithLevels).toEqual([
       { value: 1, level: 0 },
       { value: 2, level: 1 },
       { value: 4, level: 2 },

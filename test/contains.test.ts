@@ -1,13 +1,12 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { createComparedDictionary, createDictionary, obj1, obj1Copy, obj2 } from './dictionary-fixture.js';
 import Enumerable from './sut.js';
-import { ok, test } from './test-utils.js';
 
 describe("Set", () => {
   test("contains", function () {
     const numbers = Enumerable.range(1, 10);
-    ok(numbers.contains(5));
-    ok(!numbers.contains(13));
+    expect(numbers.contains(5)).toBe(true);
+    expect(numbers.contains(13)).toBe(false);
   });
 });
 
@@ -19,21 +18,21 @@ describe('Dictionary', () => {
     dictionary.add(obj1, 1);
     dictionary.add(obj1Copy, 2);
 
-    ok(dictionary.contains('a'));
-    ok(dictionary.contains('b'));
-    ok(dictionary.contains(obj1));
-    ok(dictionary.contains(obj1Copy));
-    ok(!dictionary.contains('c'));
-    ok(!dictionary.contains(obj2));
+    expect(dictionary.contains('a')).toBe(true);
+    expect(dictionary.contains('b')).toBe(true);
+    expect(dictionary.contains(obj1)).toBe(true);
+    expect(dictionary.contains(obj1Copy)).toBe(true);
+    expect(dictionary.contains('c')).toBe(false);
+    expect(dictionary.contains(obj2)).toBe(false);
 
     const comparedDictionary = createComparedDictionary();
     comparedDictionary.add(obj1, 1);
     comparedDictionary.add(obj1Copy, 2);
     comparedDictionary.add(obj2, 3);
 
-    ok(comparedDictionary.contains(obj1));
-    ok(comparedDictionary.contains(obj1Copy));
-    ok(!comparedDictionary.contains({ a: 3 }));
+    expect(comparedDictionary.contains(obj1)).toBe(true);
+    expect(comparedDictionary.contains(obj1Copy)).toBe(true);
+    expect(comparedDictionary.contains({ a: 3 })).toBe(false);
   });
 });
 test('contains uses a comparison selector for structural keys', () => {

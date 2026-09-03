@@ -1,15 +1,14 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { strictEqual, test } from './test-utils.js';
 
 describe("Set", () => {
   test("isEmpty", function () {
     const _ = Enumerable.range(1, 10).isEmpty();
 
-    strictEqual(_, false);
-    strictEqual(Enumerable.empty().isEmpty(), true);
+    expect(_).toBe(false);
+    expect(Enumerable.empty().isEmpty()).toBe(true);
 
-    strictEqual(Enumerable.from([]).isEmpty(), true);
+    expect(Enumerable.from([]).isEmpty()).toBe(true);
   });
 });
 test('isEmpty returns true for an empty sequence', () => {

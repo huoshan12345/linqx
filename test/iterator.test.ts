@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Iterator", () => {
   test("for..of", function () {
@@ -8,16 +7,16 @@ describe("Iterator", () => {
     for (const a of Enumerable.from([1, 2, 3])) {
       actual.push(a);
     }
-    deepEqual(actual, [1, 2, 3]);
+    expect(actual).toEqual([1, 2, 3]);
   });
 
   test("Symbol.iterator", function () {
     const actual = [1, 2, 3, 4];
     const expected = Array.from(Enumerable.from(actual));
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
     const actual2 = actual.map(function (x) { return x * 2; }); // [2,4,6,8];
     const selected = Enumerable.from(actual).select(function (x) { return x * 2; });
-    deepEqual(actual2, Array.from(selected));
+    expect(actual2).toEqual(Array.from(selected));
   });
 
   test("reusable iterator", function () {
@@ -25,17 +24,17 @@ describe("Iterator", () => {
 
     const a = Enumerable.from(set.entries());
 
-    deepEqual(a.toArray(), [[1, 1], [2, 2], [3, 3]]);
-    deepEqual(a.toArray(), []);
+    expect(a.toArray()).toEqual([[1, 1], [2, 2], [3, 3]]);
+    expect(a.toArray()).toEqual([]);
 
     const b = Enumerable.from(() => set.entries());
 
-    deepEqual(b.toArray(), [[1, 1], [2, 2], [3, 3]]);
-    deepEqual(b.toArray(), [[1, 1], [2, 2], [3, 3]]);
+    expect(b.toArray()).toEqual([[1, 1], [2, 2], [3, 3]]);
+    expect(b.toArray()).toEqual([[1, 1], [2, 2], [3, 3]]);
 
     const c = Enumerable.from(() => ['x', 'y', 'z']);
 
-    deepEqual(c.toArray(), ['x', 'y', 'z']);
-    deepEqual(c.toArray(), ['x', 'y', 'z']);
+    expect(c.toArray()).toEqual(['x', 'y', 'z']);
+    expect(c.toArray()).toEqual(['x', 'y', 'z']);
   });
 });

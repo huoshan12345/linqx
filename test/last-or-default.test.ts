@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { strictEqual, test } from './test-utils.js';
 
 describe("ArrayEnumerable", () => {
   const arraySequence = Enumerable.from([1, 10, 100, 1000, 10000]);
@@ -9,23 +8,23 @@ describe("ArrayEnumerable", () => {
 
   test("lastOrDefault", function () {
     // No arguments.
-    strictEqual(arraySequence.lastOrDefault(), 10000);
-    strictEqual(emptySequence.lastOrDefault(), undefined);
+    expect(arraySequence.lastOrDefault()).toBe(10000);
+    expect(emptySequence.lastOrDefault()).toBe(undefined);
 
     // No predicate.
-    strictEqual(arraySequence.lastOrDefault(0), 10000);
-    strictEqual(emptySequence.lastOrDefault(0), 0);
-    strictEqual(emptySequence.lastOrDefault(undefined), undefined);
+    expect(arraySequence.lastOrDefault(0)).toBe(10000);
+    expect(emptySequence.lastOrDefault(0)).toBe(0);
+    expect(emptySequence.lastOrDefault(undefined)).toBe(undefined);
 
     // No default value.
-    strictEqual(arraySequence.lastOrDefault(() => true), 10000);
-    strictEqual(emptySequence.lastOrDefault(() => true), undefined);
+    expect(arraySequence.lastOrDefault(() => true)).toBe(10000);
+    expect(emptySequence.lastOrDefault(() => true)).toBe(undefined);
 
     // Both arguments.
-    strictEqual(arraySequence.lastOrDefault(() => true, 0), 10000);
-    strictEqual(emptySequence.lastOrDefault(() => true, 0), 0);
-    strictEqual(emptySequence.lastOrDefault(() => true, null), null);
-    strictEqual(emptySequence.lastOrDefault(() => true, undefined), undefined);
+    expect(arraySequence.lastOrDefault(() => true, 0)).toBe(10000);
+    expect(emptySequence.lastOrDefault(() => true, 0)).toBe(0);
+    expect(emptySequence.lastOrDefault(() => true, null)).toBe(null);
+    expect(emptySequence.lastOrDefault(() => true, undefined)).toBe(undefined);
   });
 });
 
@@ -35,23 +34,23 @@ describe("Paging", () => {
     const empty = Enumerable.empty();
 
     // No arguments.
-    strictEqual(nonEmpty.lastOrDefault(), 10);
-    strictEqual(empty.lastOrDefault(), undefined);
+    expect(nonEmpty.lastOrDefault()).toBe(10);
+    expect(empty.lastOrDefault()).toBe(undefined);
 
     // No predicate.
-    strictEqual(nonEmpty.lastOrDefault(0), 10);
-    strictEqual(empty.lastOrDefault(0), 0);
-    strictEqual(empty.lastOrDefault(undefined), undefined);
+    expect(nonEmpty.lastOrDefault(0)).toBe(10);
+    expect(empty.lastOrDefault(0)).toBe(0);
+    expect(empty.lastOrDefault(undefined)).toBe(undefined);
 
     // No default value.
-    strictEqual(nonEmpty.lastOrDefault(() => true), 10);
-    strictEqual(empty.lastOrDefault(() => true), undefined);
+    expect(nonEmpty.lastOrDefault(() => true)).toBe(10);
+    expect(empty.lastOrDefault(() => true)).toBe(undefined);
 
     // Both arguments.
-    strictEqual(nonEmpty.lastOrDefault(() => true, 0), 10);
-    strictEqual(empty.lastOrDefault(() => true, 0), 0);
-    strictEqual(empty.lastOrDefault(() => true, null), null);
-    strictEqual(empty.lastOrDefault(() => true, undefined), undefined);
+    expect(nonEmpty.lastOrDefault(() => true, 0)).toBe(10);
+    expect(empty.lastOrDefault(() => true, 0)).toBe(0);
+    expect(empty.lastOrDefault(() => true, null)).toBe(null);
+    expect(empty.lastOrDefault(() => true, undefined)).toBe(undefined);
   });
 });
 test('lastOrDefault returns undefined when no value or fallback exists', () => {

@@ -1,14 +1,13 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Paging", () => {
   test("takeWhile", function () {
     let actual = Enumerable.range(1, 10).takeWhile((i) => i < 8).toArray();
-    deepEqual(actual, [1, 2, 3, 4, 5, 6, 7]);
+    expect(actual).toEqual([1, 2, 3, 4, 5, 6, 7]);
 
     actual = Enumerable.range(1, 10).takeWhile((_, i) => i < 8).toArray();
-    deepEqual(actual, [1, 2, 3, 4, 5, 6, 7, 8]);
+    expect(actual).toEqual([1, 2, 3, 4, 5, 6, 7, 8]);
   });
 });
 test('takeWhile passes zero-based source indexes', () => {

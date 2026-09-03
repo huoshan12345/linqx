@@ -1,11 +1,10 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("empty", function () {
     const actual = Enumerable.empty().toArray();
-    deepEqual(actual, []);
+    expect(actual).toEqual([]);
   });
 });
 test('empty can be enumerated repeatedly', () => {

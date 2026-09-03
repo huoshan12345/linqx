@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Join", () => {
   test("groupJoin", function () {
@@ -20,7 +19,7 @@ describe("Join", () => {
     { outer: 4, collection: [4] },
     { outer: 5, collection: [5] },
     { outer: 6, collection: [6, 6] }];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(array1)
       .groupJoin(array2, (i) => i % 2 === 0, (i) => i % 2 === 0,
@@ -36,7 +35,7 @@ describe("Join", () => {
     { outer: 4, collection: [2, 4, 6, 6] },
     { outer: 5, collection: [5] },
     { outer: 6, collection: [2, 4, 6, 6] }];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 });
 test('groupJoin supplies an empty group for an unmatched outer element', () => {

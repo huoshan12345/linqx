@@ -1,11 +1,10 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Aggregate", () => {
   test("minBy", function () {
     const actual = Enumerable.range(1, 10).select((v, i) => ({ v: v, i: i })).minBy((t) => t.i);
-    deepEqual(actual, { v: 1, i: 0 });
+    expect(actual).toEqual({ v: 1, i: 0 });
   });
 });
 test('minBy returns the first element when minimum keys tie', () => {

@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { createComparedDictionary, createDictionary, obj1, obj1Copy, obj2 } from './dictionary-fixture.js';
-import { equal, test } from './test-utils.js';
 
 describe('Dictionary', () => {
   test('get', () => {
@@ -8,17 +7,17 @@ describe('Dictionary', () => {
     dictionary.add('a', 1);
     dictionary.add(obj1, 2);
 
-    equal(dictionary.get('a'), 1);
-    equal(dictionary.get(obj1), 2);
-    equal(dictionary.get('missing'), undefined);
+    expect(dictionary.get('a')).toBe(1);
+    expect(dictionary.get(obj1)).toBe(2);
+    expect(dictionary.get('missing')).toBe(undefined);
 
     const comparedDictionary = createComparedDictionary();
     comparedDictionary.add(obj1, 1);
     comparedDictionary.add(obj1Copy, 2);
 
-    equal(comparedDictionary.get(obj1), 2);
-    equal(comparedDictionary.get(obj1Copy), 2);
-    equal(comparedDictionary.get(obj2), undefined);
+    expect(comparedDictionary.get(obj1)).toBe(2);
+    expect(comparedDictionary.get(obj1Copy)).toBe(2);
+    expect(comparedDictionary.get(obj2)).toBe(undefined);
   });
 });
 test('get distinguishes object keys by identity without a comparer', () => {

@@ -1,11 +1,10 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("make", function () {
     const actual = Enumerable.make("hoge").toArray();
-    deepEqual(actual, ["hoge"]);
+    expect(actual).toEqual(["hoge"]);
   });
 });
 test('make preserves object identity', () => {

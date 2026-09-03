@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { addObjectEntries, createComparedDictionary, createDictionary, obj1, obj2 } from './dictionary-fixture.js';
-import { equal, test } from './test-utils.js';
 
 describe('Dictionary', () => {
   test('clear', () => {
@@ -10,18 +9,18 @@ describe('Dictionary', () => {
     dictionary.add(obj1, 3);
     dictionary.clear();
 
-    equal(dictionary.get('a'), undefined);
-    equal(dictionary.get('b'), undefined);
-    equal(dictionary.get(obj1), undefined);
-    equal(dictionary.count(), 0);
+    expect(dictionary.get('a')).toBe(undefined);
+    expect(dictionary.get('b')).toBe(undefined);
+    expect(dictionary.get(obj1)).toBe(undefined);
+    expect(dictionary.count()).toBe(0);
 
     const comparedDictionary = createComparedDictionary();
     addObjectEntries(comparedDictionary);
     comparedDictionary.clear();
 
-    equal(comparedDictionary.get(obj1), undefined);
-    equal(comparedDictionary.get(obj2), undefined);
-    equal(comparedDictionary.count(), 0);
+    expect(comparedDictionary.get(obj1)).toBe(undefined);
+    expect(comparedDictionary.get(obj2)).toBe(undefined);
+    expect(comparedDictionary.count()).toBe(0);
   });
 });
 test('clear is idempotent', () => {

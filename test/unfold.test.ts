@@ -1,11 +1,10 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("unfold", function () {
     const actual = Enumerable.unfold(5, (value) => value + 3).take(5).toArray();
-    deepEqual(actual, [5, 8, 11, 14, 17]);
+    expect(actual).toEqual([5, 8, 11, 14, 17]);
   });
 });
 test('unfold starts with the seed and repeatedly transforms the previous value', () => {

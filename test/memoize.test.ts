@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, test } from './test-utils.js';
 
 describe("Functional", () => {
   test("memoize", function () {
@@ -10,17 +9,17 @@ describe("Functional", () => {
       .memoize();
     const ar1 = mem.toArray();
     const ar2 = mem.toArray();
-    deepEqual(ar1, [1, 2, 3, 4, 5]);
-    deepEqual(ar2, [1, 2, 3, 4, 5]);
-    equal(5, count);
+    expect(ar1).toEqual([1, 2, 3, 4, 5]);
+    expect(ar2).toEqual([1, 2, 3, 4, 5]);
+    expect(5).toBe(count);
 
     const memWithUndefined = Enumerable.from([1, 2, undefined, 3, 4])
       .memoize();
 
     const arWithUndefined1 = memWithUndefined.toArray();
     const arWithUndefined2 = memWithUndefined.toArray();
-    deepEqual(arWithUndefined1, [1, 2, undefined, 3, 4]);
-    deepEqual(arWithUndefined2, [1, 2, undefined, 3, 4]);
+    expect(arWithUndefined1).toEqual([1, 2, undefined, 3, 4]);
+    expect(arWithUndefined2).toEqual([1, 2, undefined, 3, 4]);
   });
 });
 test('memoize reuses a partially populated cache', () => {

@@ -1,7 +1,6 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { createDictionary } from './dictionary-fixture.js';
 import Enumerable from './sut.js';
-import { equal, test } from './test-utils.js';
 
 describe("Dictionary", () => {
   interface ObjectKey { a: number; }
@@ -24,12 +23,12 @@ describe("Dictionary", () => {
     stringDictionary.add("c", 3);
 
     const ar = stringDictionary.toEnumerable().orderBy((value) => value.key).toArray();
-    equal("a", ar[0].key);
-    equal(1, ar[0].value);
-    equal("b", ar[1].key);
-    equal(2, ar[1].value);
-    equal("c", ar[2].key);
-    equal(3, ar[2].value);
+    expect("a").toBe(ar[0].key);
+    expect(1).toBe(ar[0].value);
+    expect("b").toBe(ar[1].key);
+    expect(2).toBe(ar[1].value);
+    expect("c").toBe(ar[2].key);
+    expect(3).toBe(ar[2].value);
 
     const objectDictionary = Enumerable.empty<{ key: ObjectKey; value: number; }>()
       .toDictionary((entry) => entry.key, (entry) => entry.value);
@@ -39,14 +38,14 @@ describe("Dictionary", () => {
     objectDictionary.add(obj2_, 4);
 
     const objectEntries = objectDictionary.toEnumerable().orderBy((value) => value.key.a).toArray();
-    equal(obj1, objectEntries[0].key);
-    equal(1, objectEntries[0].value);
-    equal(obj1_, objectEntries[1].key);
-    equal(2, objectEntries[1].value);
-    equal(obj2, objectEntries[2].key);
-    equal(3, objectEntries[2].value);
-    equal(obj2_, objectEntries[3].key);
-    equal(4, objectEntries[3].value);
+    expect(obj1).toBe(objectEntries[0].key);
+    expect(1).toBe(objectEntries[0].value);
+    expect(obj1_).toBe(objectEntries[1].key);
+    expect(2).toBe(objectEntries[1].value);
+    expect(obj2).toBe(objectEntries[2].key);
+    expect(3).toBe(objectEntries[2].value);
+    expect(obj2_).toBe(objectEntries[3].key);
+    expect(4).toBe(objectEntries[3].value);
 
     const comparedDictionary = Enumerable.empty<{ key: ObjectKey; value: number; }>()
       .toDictionary((entry) => entry.key, (entry) => entry.value, aComparer);
@@ -55,10 +54,10 @@ describe("Dictionary", () => {
     comparedDictionary.add(obj2, 3);
     comparedDictionary.add(obj2_, 4);
     const comparedEntries = comparedDictionary.toEnumerable().orderBy((value) => value.key.a).toArray();
-    equal(obj1_, comparedEntries[0].key);
-    equal(2, comparedEntries[0].value);
-    equal(obj2_, comparedEntries[1].key);
-    equal(4, comparedEntries[1].value);
+    expect(obj1_).toBe(comparedEntries[0].key);
+    expect(2).toBe(comparedEntries[0].value);
+    expect(obj2_).toBe(comparedEntries[1].key);
+    expect(4).toBe(comparedEntries[1].value);
   });
 });
 test('toEnumerable preserves dictionary insertion order', () => {

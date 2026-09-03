@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("repeatWithFinalize", function () {
@@ -9,8 +8,8 @@ describe("Enumerable", () => {
       function () { return "temp"; },
       function () { fin = "final"; })
       .take(3).toArray();
-    deepEqual(actual, ["temp", "temp", "temp"]);
-    equal("final", fin);
+    expect(actual).toEqual(["temp", "temp", "temp"]);
+    expect("final").toBe(fin);
   });
 });
 test('repeatWithFinalize finalizes after early termination', () => {

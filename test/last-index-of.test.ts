@@ -1,14 +1,13 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { strictEqual, test } from './test-utils.js';
 
 describe("Paging", () => {
   test("lastIndexOf", function () {
     const actual = Enumerable.from([1, 2, 3, 2, 5]).lastIndexOf(2);
-    strictEqual(actual, 3);
+    expect(actual).toBe(3);
 
-    strictEqual(Enumerable.from([1, 2, 3, 3, 3, 4, 5]).lastIndexOf(3), 4);
-    strictEqual(Enumerable.from([1, 2, 3, 3, 3, 4, 5]).lastIndexOf(function (x) { return x === 3; }), 4);
+    expect(Enumerable.from([1, 2, 3, 3, 3, 4, 5]).lastIndexOf(3)).toBe(4);
+    expect(Enumerable.from([1, 2, 3, 3, 3, 4, 5]).lastIndexOf(function (x) { return x === 3; })).toBe(4);
   });
 });
 test('lastIndexOf returns minus one when no element matches', () => {

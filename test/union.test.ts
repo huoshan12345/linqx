@@ -1,17 +1,16 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Set", () => {
   test("union", function () {
     let actual: unknown = Enumerable.from([1, 3, 5, 6, 6, 3, 4, 3, 2, 9])
       .union([4, 6, 2, 7, 8, 10, 11])
       .toArray();
-    deepEqual(actual, [1, 3, 5, 6, 4, 2, 9, 7, 8, 10, 11]);
+    expect(actual).toEqual([1, 3, 5, 6, 4, 2, 9, 7, 8, 10, 11]);
     actual = Enumerable.range(1, 3).select((value) => ({ test: value }))
       .union(Enumerable.range(2, 3).select((value) => ({ test: value })), (value) => value.test)
       .toArray();
-    deepEqual(actual, [{ test: 1 }, { test: 2 }, { test: 3 }, { test: 4 }]);
+    expect(actual).toEqual([{ test: 1 }, { test: 2 }, { test: 3 }, { test: 4 }]);
   });
 });
 test('union removes duplicates while preserving first occurrence order', () => {

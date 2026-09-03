@@ -1,13 +1,12 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Projection", () => {
   test("choose", function () {
     const sequence = Enumerable.from<(number | null)>([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-    deepEqual(sequence.choose(function (x) {
+    expect(sequence.choose(function (x) {
       return x !== null && x % 2 === 0 ? null : x;
-    }).toArray(), [1, 3, 5, 7, 9]);
+    }).toArray()).toEqual([1, 3, 5, 7, 9]);
   });
 });
 test('choose omits both null and undefined projections', () => {

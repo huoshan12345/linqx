@@ -1,11 +1,10 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Set", () => {
   test("insert", function () {
     const actual = Enumerable.range(1, 5).insert(3, [20, 21, 22]).toArray();
-    deepEqual(actual, [1, 2, 3, 20, 21, 22, 4, 5]);
+    expect(actual).toEqual([1, 2, 3, 20, 21, 22, 4, 5]);
   });
 });
 test('insert can prepend and append a sequence', () => {

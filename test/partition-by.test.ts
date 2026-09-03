@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Grouping", () => {
   const fileList = ["temp.xls", "temp2.xls", "temp.pdf", "temp.jpg", "temp2.pdf", "temp3.xls"];
@@ -16,7 +15,7 @@ describe("Grouping", () => {
     { key: "pdf", value: ["temp2.pdf"] },
     { key: "xls", value: ["temp3.xls"] }
     ];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(fileList)
       .partitionBy((file) => file.match(/\.(.+$)/)![1], (file) => file.match(/(^.+)\..+$/)![1])
@@ -28,7 +27,7 @@ describe("Grouping", () => {
     { key: "pdf", value: ["temp2"] },
     { key: "xls", value: ["temp3"] }
     ];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(fileList)
       .partitionBy((file) => file.match(/\.(.+$)/)![1],
@@ -41,7 +40,7 @@ describe("Grouping", () => {
     { extension: "pdf", count: 1, files: ["temp2.pdf"] },
     { extension: "xls", count: 1, files: ["temp3.xls"] }
     ];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     const objects = [
       { Date: new Date(2000, 1, 1), Id: 1 },
@@ -57,7 +56,7 @@ describe("Grouping", () => {
         function (key) { return key.toString(); })
       .toArray();
     expected = ["2000-1,2", "2010-3", "2000-4", "2010-5,6"];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 });
 test('partitionBy separates equal keys that are not adjacent', () => {

@@ -1,12 +1,11 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Grouping", () => {
   test("buffer", function () {
     const actual = Enumerable.range(1, 10).buffer(3).toArray();
     const expected = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 });
 test('buffer emits a final partial buffer', () => {

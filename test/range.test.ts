@@ -1,17 +1,16 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("range", function () {
     let actual = Enumerable.range(1, 10).toArray();
-    deepEqual(actual, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    expect(actual).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     actual = Enumerable.range(1, 5, 3).toArray();
-    deepEqual(actual, [1, 4, 7, 10, 13]);
+    expect(actual).toEqual([1, 4, 7, 10, 13]);
 
-    deepEqual(Enumerable.range(3, 4).toArray(), [3, 4, 5, 6]);
-    deepEqual(Enumerable.range(-2, 4).toArray(), [-2, -1, 0, 1]);
-    deepEqual(Enumerable.range(-2, 4, 2).toArray(), [-2, 0, 2, 4]);
+    expect(Enumerable.range(3, 4).toArray()).toEqual([3, 4, 5, 6]);
+    expect(Enumerable.range(-2, 4).toArray()).toEqual([-2, -1, 0, 1]);
+    expect(Enumerable.range(-2, 4, 2).toArray()).toEqual([-2, 0, 2, 4]);
   });
 });
 test('range supports negative and fractional steps', () => {

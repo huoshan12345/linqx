@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Join", () => {
   test("join", function () {
@@ -13,7 +12,7 @@ describe("Join", () => {
     let expected: unknown = [{ Name: "yamada", Math: 100, English: 73 },
     { Name: "tanaka", Math: 80, English: 99 },
     { Name: "yoshida", Math: 94, English: 26 }];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(math)
       .join(Enumerable.from(english), (outer) => outer.key, (inner) => inner.key,
@@ -24,7 +23,7 @@ describe("Join", () => {
     { Name: "tanaka", Math: 80, English: 99 },
     { Name: "yoshida", Math: 94, English: 26 }];
 
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(math)
       .join(Enumerable.from(english), (outer) => outer.key, (inner) => inner.key,
@@ -33,7 +32,7 @@ describe("Join", () => {
 
     expected = [{ returnVal: "yamada" }, { returnVal: "tanaka" }, { returnVal: "yoshida" }];
 
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 });
 test('join emits every matching pair for duplicate keys', () => {

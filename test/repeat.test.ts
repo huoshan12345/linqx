@@ -1,13 +1,12 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("repeat", function () {
     let actual = Enumerable.repeat("temp").take(3).toArray();
-    deepEqual(actual, ["temp", "temp", "temp"]);
+    expect(actual).toEqual(["temp", "temp", "temp"]);
     actual = Enumerable.repeat("temp", 5).toArray();
-    deepEqual(actual, ["temp", "temp", "temp", "temp", "temp"]);
+    expect(actual).toEqual(["temp", "temp", "temp", "temp", "temp"]);
   });
 });
 test('repeat emits exactly the requested count', () => {

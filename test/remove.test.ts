@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { addObjectEntries, createComparedDictionary, createDictionary, obj1, obj1Copy, obj2, obj2Copy } from './dictionary-fixture.js';
-import { equal, test } from './test-utils.js';
 
 describe('Dictionary', () => {
   test('remove', () => {
@@ -15,20 +14,20 @@ describe('Dictionary', () => {
     dictionary.remove(obj1Copy);
     dictionary.remove(obj2Copy);
 
-    equal(dictionary.get('a'), undefined);
-    equal(dictionary.get(obj1), undefined);
-    equal(dictionary.get(obj1Copy), undefined);
-    equal(dictionary.get(obj2Copy), undefined);
-    equal(dictionary.count(), 3);
+    expect(dictionary.get('a')).toBe(undefined);
+    expect(dictionary.get(obj1)).toBe(undefined);
+    expect(dictionary.get(obj1Copy)).toBe(undefined);
+    expect(dictionary.get(obj2Copy)).toBe(undefined);
+    expect(dictionary.count()).toBe(3);
 
     const comparedDictionary = createComparedDictionary();
     addObjectEntries(comparedDictionary);
     comparedDictionary.remove(obj1);
 
-    equal(comparedDictionary.get(obj1), undefined);
-    equal(comparedDictionary.get(obj1Copy), undefined);
-    equal(comparedDictionary.get(obj2), 4);
-    equal(comparedDictionary.count(), 1);
+    expect(comparedDictionary.get(obj1)).toBe(undefined);
+    expect(comparedDictionary.get(obj1Copy)).toBe(undefined);
+    expect(comparedDictionary.get(obj2)).toBe(4);
+    expect(comparedDictionary.count()).toBe(1);
   });
 });
 test('remove does nothing when the key is absent', () => {

@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { ok, test } from './test-utils.js';
 
 describe("ArrayEnumerable", () => {
   const arraySequence = Enumerable.from([1, 10, 100, 1000, 10000]);
@@ -8,10 +7,10 @@ describe("ArrayEnumerable", () => {
   const emptySequence = Enumerable.from([]);
 
   test("any", function () {
-    ok(arraySequence.any());
-    ok(!emptySequence.any());
-    ok(arraySequence.any((value) => value === 100));
-    ok(!emptySequence.any((value) => value === 2));
+    expect(arraySequence.any()).toBe(true);
+    expect(emptySequence.any()).toBe(false);
+    expect(arraySequence.any((value) => value === 100)).toBe(true);
+    expect(emptySequence.any((value) => value === 2)).toBe(false);
   });
 });
 
@@ -19,10 +18,10 @@ describe("Set", () => {
   test("any", function () {
     const seq = Enumerable.range(1, 10);
     const empty = Enumerable.empty();
-    ok(seq.any());
-    ok(!empty.any());
-    ok(seq.any((value) => value === 5));
-    ok(!seq.any((value) => value === 100));
+    expect(seq.any()).toBe(true);
+    expect(empty.any()).toBe(false);
+    expect(seq.any((value) => value === 5)).toBe(true);
+    expect(seq.any((value) => value === 100)).toBe(false);
   });
 });
 test('any stops evaluating after the first accepted element', () => {

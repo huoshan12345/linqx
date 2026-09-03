@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Join", () => {
   test("leftJoin", function () {
@@ -13,7 +12,7 @@ describe("Join", () => {
     const expected = [{ Name: "yamada", Math: 100, English: 73 },
     { Name: "tanaka", Math: 80, English: 99 },
     { Name: "yoshida", Math: 94, English: null }];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
   });
 });

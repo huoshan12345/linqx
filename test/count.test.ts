@@ -1,17 +1,16 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { addObjectEntries, createComparedDictionary, createDictionary } from './dictionary-fixture.js';
 import Enumerable from './sut.js';
-import { equal, test } from './test-utils.js';
 
 describe("Aggregate", () => {
   test("count", function () {
     let actual = Enumerable.range(1, 10).count();
-    equal(actual, 10);
+    expect(actual).toBe(10);
     actual = Enumerable.empty().count();
-    equal(actual, 0);
+    expect(actual).toBe(0);
 
     actual = Enumerable.range(1, 10).count((i) => i < 5);
-    equal(actual, 4);
+    expect(actual).toBe(4);
   });
 });
 
@@ -21,10 +20,10 @@ describe("ArrayEnumerable", () => {
   const emptySequence = Enumerable.from([]);
 
   test("count", function () {
-    equal(arraySequence.count(), 5);
-    equal(emptySequence.count(), 0);
-    equal(arraySequence.count((value) => value <= 100), 3);
-    equal(emptySequence.count((value) => value <= 100), 0);
+    expect(arraySequence.count()).toBe(5);
+    expect(emptySequence.count()).toBe(0);
+    expect(arraySequence.count((value) => value <= 100)).toBe(3);
+    expect(emptySequence.count((value) => value <= 100)).toBe(0);
   });
 });
 
@@ -35,15 +34,15 @@ describe('Dictionary', () => {
     dictionary.add('b', 2);
     dictionary.add('c', 3);
     addObjectEntries(dictionary);
-    equal(dictionary.count(), 7);
+    expect(dictionary.count()).toBe(7);
 
     dictionary.remove('a');
-    equal(dictionary.count(), 6);
+    expect(dictionary.count()).toBe(6);
     dictionary.clear();
-    equal(dictionary.count(), 0);
+    expect(dictionary.count()).toBe(0);
 
     const comparedDictionary = createComparedDictionary();
     addObjectEntries(comparedDictionary);
-    equal(comparedDictionary.count(), 2);
+    expect(comparedDictionary.count()).toBe(2);
   });
 });

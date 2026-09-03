@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, test } from './test-utils.js';
 
 describe("Functional", () => {
   test("letBind", function () {
@@ -10,7 +9,7 @@ describe("Functional", () => {
       })
       .select((value) => value.a + value.b)
       .sum();
-    equal(sum, 110);
+    expect(sum).toBe(110);
 
     const l1 = Enumerable.from([1, 2, 3, 4, 5]).letBind(function (a) {
       return Enumerable.from(a).zip(Enumerable.from(a).skip(1), function (x, y) {
@@ -18,7 +17,7 @@ describe("Functional", () => {
       });
     }).toArray();
 
-    deepEqual(l1, ['1:2', '2:3', '3:4', '4:5']);
+    expect(l1).toEqual(['1:2', '2:3', '3:4', '4:5']);
 
     const l2 = Enumerable.range(1, 5).letBind(function (a) {
       return Enumerable.from(a).zip(Enumerable.from(a).skip(1), function (x, y) {
@@ -26,9 +25,9 @@ describe("Functional", () => {
       });
     }).toArray();
 
-    deepEqual(l2, ['1:2', '2:3', '3:4', '4:5']);
+    expect(l2).toEqual(['1:2', '2:3', '3:4', '4:5']);
 
-    deepEqual(l1, l2);
+    expect(l1).toEqual(l2);
   });
 });
 test('letBind invokes its function once per enumeration', () => {

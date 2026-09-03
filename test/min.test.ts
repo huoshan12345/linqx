@@ -1,14 +1,13 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { equal, test } from './test-utils.js';
 
 describe("Aggregate", () => {
   test("min", function () {
     let actual = Enumerable.range(1, 10).min();
-    equal(actual, 1);
+    expect(actual).toBe(1);
 
     actual = Enumerable.range(1, 10).select((v, i) => ({ v: v, i: i })).min((t) => t.i);
-    equal(actual, 0);
+    expect(actual).toBe(0);
   });
 });
 test('min projects values before comparing them', () => {

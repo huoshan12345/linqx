@@ -1,18 +1,17 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { strictEqual, test } from './test-utils.js';
 
 describe("Paging", () => {
   test("singleOrDefault", function () {
     let actual = Enumerable.range(1, 10).singleOrDefault((i) => i * 3 === 6, 4);
-    strictEqual(actual, 2);
+    expect(actual).toBe(2);
     actual = Enumerable.range(1, 10).singleOrDefault((i) => i > 13, 40);
-    strictEqual(actual, 40);
+    expect(actual).toBe(40);
 
-    strictEqual(Enumerable.range(1, 1).singleOrDefault(), 1);
-    strictEqual(Enumerable.range(1, 10).singleOrDefault((i) => i * 3 === 6), 2);
-    strictEqual(Enumerable.range(1, 10).singleOrDefault((i) => i > 13), undefined);
-    strictEqual(Enumerable.empty().singleOrDefault(), undefined);
+    expect(Enumerable.range(1, 1).singleOrDefault()).toBe(1);
+    expect(Enumerable.range(1, 10).singleOrDefault((i) => i * 3 === 6)).toBe(2);
+    expect(Enumerable.range(1, 10).singleOrDefault((i) => i > 13)).toBe(undefined);
+    expect(Enumerable.empty().singleOrDefault()).toBe(undefined);
   });
 });
 test('singleOrDefault returns a fallback when no element matches', () => {

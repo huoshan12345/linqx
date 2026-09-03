@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, test } from './test-utils.js';
 
 describe("ErrorHandling", () => {
   test("catchError", function () {
@@ -14,8 +13,8 @@ describe("ErrorHandling", () => {
         msg = e instanceof Error ? e.message : String(e);
       })
       .toArray();
-    deepEqual(actual, [1, 2, 3, 4]);
-    equal(msg, "aiueo");
+    expect(actual).toEqual([1, 2, 3, 4]);
+    expect(msg).toBe("aiueo");
   });
 });
 test('catchError passes through a sequence that does not fail', () => {

@@ -1,16 +1,15 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { equal, test } from './test-utils.js';
 
 describe("Aggregate", () => {
   test("sum", function () {
     let actual = Enumerable.range(1, 10).sum();
-    equal(actual, 55);
+    expect(actual).toBe(55);
     actual = Enumerable.empty().sum();
-    equal(actual, 0);
+    expect(actual).toBe(0);
 
     actual = Enumerable.range(1, 10).select((v, i) => ({ v: v, i: i })).sum((t) => t.i);
-    equal(actual, 45);
+    expect(actual).toBe(45);
   });
 });
 test('sum projects source elements before adding them', () => {

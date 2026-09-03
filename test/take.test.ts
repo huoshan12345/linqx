@@ -1,11 +1,10 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Paging", () => {
   test("take", function () {
     const actual = Enumerable.range(1, 10).take(4).toArray();
-    deepEqual(actual, [1, 2, 3, 4]);
+    expect(actual).toEqual([1, 2, 3, 4]);
   });
 });
 test('take returns the entire source when count exceeds its length', () => {

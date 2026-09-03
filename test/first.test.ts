@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { equal, ok, strictEqual, test } from './test-utils.js';
 
 describe("ArrayEnumerable", () => {
   const arraySequence = Enumerable.from([1, 10, 100, 1000, 10000]);
@@ -8,29 +7,21 @@ describe("ArrayEnumerable", () => {
   const emptySequence = Enumerable.from([]);
 
   test("first", function () {
-    equal(arraySequence.first(), 1);
-    equal(arraySequence.first((value) => value >= 100), 100);
-
-    try {
-      arraySequence.first((value) => value === -1);
-      ok(false);
-    }
-    catch (e) { ok(true); }
-
-    try {
-      emptySequence.first();
-      ok(false);
-    }
-    catch (e) { ok(true); }
+    expect(arraySequence.first()).toBe(1);
+    expect(arraySequence.first((value) => value >= 100)).toBe(100);
+    expect(() => arraySequence.first((value) => value === -1))
+      .toThrow('Sequence contains no matching element.');
+    expect(() => emptySequence.first())
+      .toThrow('Sequence contains no matching element.');
   });
 });
 
 describe("Paging", () => {
   test("first", function () {
     let actual = Enumerable.range(1, 10).first();
-    strictEqual(actual, 1);
+    expect(actual).toBe(1);
     actual = Enumerable.range(1, 10).first((i) => i * 3 === 6);
-    strictEqual(actual, 2);
+    expect(actual).toBe(2);
   });
 });
 test('first stops enumerating after the first match', () => {

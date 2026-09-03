@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Ordering", () => {
   let expected, actual;
@@ -36,7 +35,7 @@ describe("Ordering", () => {
       { a: 2, b: 4, c: 1 },
       { a: 2, b: 3, c: 7 }
     ];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(strlist)
       .orderByDescending((l) => l.a)
@@ -50,7 +49,7 @@ describe("Ordering", () => {
       { a: "a", b: "z", c: "b" },
       { a: "a", b: "c", c: "k" }
     ];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 });
 test('thenByDescending orders equal primary keys by a descending secondary key', () => {

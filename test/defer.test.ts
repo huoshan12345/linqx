@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("defer", function () {
@@ -11,10 +10,10 @@ describe("Enumerable", () => {
 
     const de = Enumerable.defer(function () { return r; });
 
-    equal(xs.length, 0);
+    expect(xs.length).toBe(0);
 
-    deepEqual(de.toArray(), [1, 2, 3, 4, 5]);
-    deepEqual(xs, [1, 2, 3, 4, 5]);
+    expect(de.toArray()).toEqual([1, 2, 3, 4, 5]);
+    expect(xs).toEqual([1, 2, 3, 4, 5]);
   });
 });
 test('defer does not invoke the factory before enumeration', () => {

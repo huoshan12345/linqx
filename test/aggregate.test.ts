@@ -1,13 +1,12 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { strictEqual, test } from './test-utils.js';
 
 describe("Aggregate", () => {
   test("aggregate", function () {
-    strictEqual(Enumerable.range(1, 10).aggregate((a, b) => a + b), 55);
-    strictEqual(Enumerable.range(1, 10).aggregate(10, (a, b) => a + b), 65);
-    strictEqual(Enumerable.range(1, 10).aggregate(10, (a, b) => a + b, (val) => val * 10), 650);
-    strictEqual(Enumerable.range(1, 10).aggregate("", (s, x) => s + x, (value) => 'hoge' + value), "hoge12345678910");
+    expect(Enumerable.range(1, 10).aggregate((a, b) => a + b)).toBe(55);
+    expect(Enumerable.range(1, 10).aggregate(10, (a, b) => a + b)).toBe(65);
+    expect(Enumerable.range(1, 10).aggregate(10, (a, b) => a + b, (val) => val * 10)).toBe(650);
+    expect(Enumerable.range(1, 10).aggregate("", (s, x) => s + x, (value) => 'hoge' + value)).toBe("hoge12345678910");
   });
 });
 

@@ -1,13 +1,12 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Set", () => {
   test("distinct", function () {
     let actual: unknown = Enumerable.from([1, 3, 5, 6, 6, 3, 4, 3, 2, 9]).distinct().toArray();
-    deepEqual(actual, [1, 3, 5, 6, 4, 2, 9]);
+    expect(actual).toEqual([1, 3, 5, 6, 4, 2, 9]);
     actual = Enumerable.range(1, 10).select((value) => ({ test: value % 2 })).distinct((value) => value.test).toArray();
-    deepEqual(actual, [{ test: 1 }, { test: 0 }]);
+    expect(actual).toEqual([{ test: 1 }, { test: 0 }]);
   });
 });
 test('distinct preserves the first occurrence order', () => {

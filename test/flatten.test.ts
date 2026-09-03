@@ -1,12 +1,11 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Projection", () => {
   test("flatten", function () {
     const array = [1, 31, [431, 41, 5], [1431, 43, [344, 3], 43], 43];
     const actual = Enumerable.from(array).flatten().toArray();
-    deepEqual(actual, [1, 31, 431, 41, 5, 1431, 43, 344, 3, 43, 43]);
+    expect(actual).toEqual([1, 31, 431, 41, 5, 1431, 43, 344, 3, 43, 43]);
   });
 });
 test('flatten treats strings as scalar values', () => {

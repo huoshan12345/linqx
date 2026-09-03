@@ -1,11 +1,10 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Convert", () => {
   test("toObject", function () {
     const actual = Enumerable.range(1, 3).toObject((i) => 'foo' + i, (i) => i * 4);
-    deepEqual(actual, { foo1: 4, foo2: 8, foo3: 12 });
+    expect(actual).toEqual({ foo1: 4, foo2: 8, foo3: 12 });
   });
 });
 test('toObject keeps the last value for duplicate property keys', () => {

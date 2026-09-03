@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Functional", () => {
   test("share", function () {
@@ -8,9 +7,9 @@ describe("Functional", () => {
     const ar1 = share.take(4).toArray();
     const ar2 = share.toArray();
     const ar3 = share.toArray();
-    deepEqual(ar1, [1, 2, 3, 4]);
-    deepEqual(ar2, [5, 6, 7, 8, 9, 10]);
-    deepEqual(ar3, []);
+    expect(ar1).toEqual([1, 2, 3, 4]);
+    expect(ar2).toEqual([5, 6, 7, 8, 9, 10]);
+    expect(ar3).toEqual([]);
   });
 });
 test('share distributes one source iterator between consumers', () => {

@@ -1,14 +1,13 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Paging", () => {
   test("skipWhile", function () {
     let actual = Enumerable.range(1, 10).skipWhile((i) => i < 8).toArray();
-    deepEqual(actual, [8, 9, 10]);
+    expect(actual).toEqual([8, 9, 10]);
 
     actual = Enumerable.range(1, 10).skipWhile((_, i) => i < 8).toArray();
-    deepEqual(actual, [9, 10]);
+    expect(actual).toEqual([9, 10]);
   });
 });
 test('skipWhile passes source indexes only until skipping ends', () => {

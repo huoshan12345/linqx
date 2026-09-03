@@ -1,20 +1,19 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, test } from './test-utils.js';
 
 describe("Enumerable", () => {
   test("from", function () {
     let actual: unknown = Enumerable.from("temp").toArray();
-    deepEqual(actual, ["t", "e", "m", "p"]);
+    expect(actual).toEqual(["t", "e", "m", "p"]);
 
     actual = Enumerable.from(3).toArray();
-    deepEqual(actual, [3]);
+    expect(actual).toEqual([3]);
 
     actual = Enumerable.from([1, 2, 3, 4, 5]).toArray();
-    deepEqual(actual, [1, 2, 3, 4, 5]);
+    expect(actual).toEqual([1, 2, 3, 4, 5]);
 
     actual = Enumerable.from({ foo: "bar", func: function () { } }).toArray();
-    deepEqual(actual, [{ key: "foo", value: "bar" }]);
+    expect(actual).toEqual([{ key: "foo", value: "bar" }]);
   });
 });
 
@@ -25,13 +24,13 @@ describe("Iterator", () => {
       yield "def";
     }
 
-    deepEqual(Enumerable.from(words()).toArray(), ["abc", "def"]);
+    expect(Enumerable.from(words()).toArray()).toEqual(["abc", "def"]);
 
     const actual: string[] = [];
     for (const a of Enumerable.from(words())) {
       actual.push(a);
     }
-    deepEqual(actual, ["abc", "def"]);
+    expect(actual).toEqual(["abc", "def"]);
   });
 
   test("from Iterable object", function () {
@@ -40,21 +39,20 @@ describe("Iterator", () => {
     map.set(1, 2);
     map.set(2, 4);
 
-    deepEqual(Enumerable
+    expect(Enumerable
       .from(map)
       .select(item => ({ key: item[0], value: item[1] }))
       .select(item => item.key)
-      .toArray(),
-      [1, 2]);
+      .toArray()).toEqual([1, 2]);
 
     const actual: number[] = [];
     for (const a of map) {
       actual.push(a[0]);
     }
-    deepEqual(actual, [1, 2]);
+    expect(actual).toEqual([1, 2]);
 
     const set = new Set([1, 2, 3]);
-    equal(Enumerable.from(set).first(), 1);
+    expect(Enumerable.from(set).first()).toBe(1);
   });
 
   test("from Iterator object", function () {
@@ -83,12 +81,12 @@ describe("Iterator", () => {
       }
     };
 
-    deepEqual(Enumerable.from(n[Symbol.iterator]()).toArray(), [1, 2, 3]);
+    expect(Enumerable.from(n[Symbol.iterator]()).toArray()).toEqual([1, 2, 3]);
 
     const actual: number[] = [];
     for (const a of n) {
       actual.push(a);
     }
-    deepEqual(actual, [1, 2, 3]);
+    expect(actual).toEqual([1, 2, 3]);
   });
 });

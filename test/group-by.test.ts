@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, test } from './test-utils.js';
 
 describe("Grouping", () => {
   const fileList = ["temp.xls", "temp2.xls", "temp.pdf", "temp.jpg", "temp2.pdf", "temp3.xls"];
@@ -13,7 +12,7 @@ describe("Grouping", () => {
     let expected: unknown = [{ key: "xls", value: ["temp.xls", "temp2.xls", "temp3.xls"] },
     { key: "pdf", value: ["temp.pdf", "temp2.pdf"] },
     { key: "jpg", value: ["temp.jpg"] }];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(fileList)
       .groupBy((file) => file.match(/\.(.+$)/)![1], (file) => file.match(/(^.+)\..+$/)![1])
@@ -22,7 +21,7 @@ describe("Grouping", () => {
     expected = [{ key: "xls", value: ["temp", "temp2", "temp3"] },
     { key: "pdf", value: ["temp", "temp2"] },
     { key: "jpg", value: ["temp"] }];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     actual = Enumerable.from(fileList).groupBy((file) => file.match(/\.(.+$)/)![1],
       (file) => file,
@@ -31,7 +30,7 @@ describe("Grouping", () => {
     expected = [{ extension: "xls", count: 3, files: ["temp.xls", "temp2.xls", "temp3.xls"] },
     { extension: "pdf", count: 2, files: ["temp.pdf", "temp2.pdf"] },
     { extension: "jpg", count: 1, files: ["temp.jpg"] }];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
 
     const objects = [
       { Date: new Date(2000, 1, 1), Id: 1 },
@@ -44,7 +43,7 @@ describe("Grouping", () => {
         function (key) { return key.toString(); })
       .toArray();
     expected = ["2000-1,3", "2010-2"];
-    deepEqual(actual, expected);
+    expect(actual).toEqual(expected);
   });
 });
 test('groupBy preserves first-key occurrence order', () => {

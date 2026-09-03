@@ -1,12 +1,11 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { ok, test } from './test-utils.js';
 
 describe("Set", () => {
   test("all", function () {
     const seq = Enumerable.range(1, 10);
-    ok(!seq.all((i) => i % 2 === 0));
-    ok(seq.all((i) => i <= 10));
+    expect(seq.all((i) => i % 2 === 0)).toBe(false);
+    expect(seq.all((i) => i <= 10)).toBe(true);
   });
 });
 test('all returns true for an empty sequence', () => {

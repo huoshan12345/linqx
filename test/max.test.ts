@@ -1,14 +1,13 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import Enumerable from './sut.js';
-import { equal, test } from './test-utils.js';
 
 describe("Aggregate", () => {
   test("Max", function () {
     let actual = Enumerable.range(1, 10).max();
-    equal(actual, 10);
+    expect(actual).toBe(10);
 
     actual = Enumerable.range(1, 10).select((v, i) => ({ v: v, i: i })).max((t) => t.i);
-    equal(actual, 9);
+    expect(actual).toBe(9);
   });
 });
 test('max projects values before comparing them', () => {

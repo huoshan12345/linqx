@@ -1,6 +1,5 @@
-import { describe } from 'vitest';
+import { describe, expect, test } from 'vitest';
 import { createComparedDictionary, createDictionary, obj1, obj1Copy, obj2, obj2Copy } from './dictionary-fixture.js';
-import { equal, test } from './test-utils.js';
 
 describe('Dictionary', () => {
   test('add', () => {
@@ -10,19 +9,19 @@ describe('Dictionary', () => {
     dictionary.add('c', 3);
     dictionary.add('c', 100);
 
-    equal(dictionary.get('a'), 1);
-    equal(dictionary.get('b'), 2);
-    equal(dictionary.get('c'), 100);
+    expect(dictionary.get('a')).toBe(1);
+    expect(dictionary.get('b')).toBe(2);
+    expect(dictionary.get('c')).toBe(100);
 
     dictionary.add(obj1, 1);
     dictionary.add(obj1Copy, 2);
     dictionary.add(obj2, 3);
     dictionary.add(obj2Copy, 4);
 
-    equal(dictionary.get(obj1), 1);
-    equal(dictionary.get(obj1Copy), 2);
-    equal(dictionary.get(obj2), 3);
-    equal(dictionary.get(obj2Copy), 4);
+    expect(dictionary.get(obj1)).toBe(1);
+    expect(dictionary.get(obj1Copy)).toBe(2);
+    expect(dictionary.get(obj2)).toBe(3);
+    expect(dictionary.get(obj2Copy)).toBe(4);
 
     const comparedDictionary = createComparedDictionary();
     comparedDictionary.add(obj1, 1);
@@ -30,10 +29,10 @@ describe('Dictionary', () => {
     comparedDictionary.add(obj2, 3);
     comparedDictionary.add(obj2Copy, 4);
 
-    equal(comparedDictionary.get(obj1), 2);
-    equal(comparedDictionary.get(obj1Copy), 2);
-    equal(comparedDictionary.get(obj2), 4);
-    equal(comparedDictionary.get(obj2Copy), 4);
+    expect(comparedDictionary.get(obj1)).toBe(2);
+    expect(comparedDictionary.get(obj1Copy)).toBe(2);
+    expect(comparedDictionary.get(obj2)).toBe(4);
+    expect(comparedDictionary.get(obj2Copy)).toBe(4);
   });
 });
 test('add replaces an existing key without increasing the count', () => {
