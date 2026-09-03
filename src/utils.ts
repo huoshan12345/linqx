@@ -3,18 +3,67 @@ import { Enumerator } from './core/enumerator.js';
 import { createEnumerable as createSequence } from './internal/create-enumerable.js';
 import { instanceOperators } from './operators/operators.js';
 
+/** Low-level helpers used to integrate custom sources and host prototypes with linqx. */
 export interface EnumerableUtils {
+  /**
+   * Returns a function unchanged, or creates an identity function for a nullish value.
+   *
+   * @param expression The function to return. `null` and `undefined` select the identity function.
+   * @returns The supplied function or an identity function.
+   * @throws {TypeError} When a non-nullish value is not a function.
+   */
   createLambda<T>(
     expression?: T,
   ): T extends null | undefined ? (value: unknown) => unknown : T;
+
+  /**
+   * Creates a sequence from an imperative enumerator factory.
+   *
+   * @param getEnumerator Creates a fresh enumerator for an enumeration.
+   * @returns A deferred linqx sequence.
+   */
   createEnumerable<T>(getEnumerator: () => IEnumerator<T>): IEnumerable<T>;
+
+  /**
+   * Creates an imperative enumerator from lifecycle callbacks.
+   *
+   * `initialize` runs on the first call to `moveNext`; `dispose` runs when enumeration ends,
+   * fails, or is explicitly disposed.
+   *
+   * @param initialize Initializes enumeration state.
+   * @param tryGetNext Advances the state and returns whether a current element is available.
+   * @param dispose Releases enumeration resources.
+   * @returns An imperative enumerator controlled by the callbacks.
+   */
   createEnumerator<T>(
     initialize: () => void,
     tryGetNext: () => boolean,
     dispose: () => void,
   ): IEnumerator<T>;
+
+  /**
+   * Adds linqx instance operators to a constructor's prototype.
+   *
+   * Existing member names are preserved and the linqx alternative receives a `ByLinq` suffix.
+   *
+   * @param type The constructor whose prototype will be extended.
+   * @throws {TypeError} When `type` is not a constructor with a prototype.
+   */
   extendTo(type: unknown): void;
+
+  /**
+   * Removes members previously installed by `extendTo` from a constructor's prototype.
+   *
+   * @param type The constructor whose linqx extensions will be removed.
+   * @throws {TypeError} When `type` is not a constructor with a prototype.
+   */
   recallFrom(type: unknown): void;
+
+  /**
+   * Tests whether the runtime exposes the native iterator symbols required by linqx.
+   *
+   * @returns `true` when `Symbol.iterator` is available; otherwise, `false`.
+   */
   hasNativeIteratorSupport(): boolean;
 }
 
@@ -162,6 +211,7 @@ function recallFrom(type: unknown): void {
   }
 }
 
+/** Low-level utilities exposed as `Enumerable.Utils`. */
 export const Utils: EnumerableUtils = {
   createLambda,
   createEnumerable,
