@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Join", () => {
@@ -25,15 +25,14 @@ describe("Join", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(array1)
-          .groupJoin(array2, (i) => i, (i) => i,
+          .groupJoin(array2, (i) => i % 2 == 0, (i) => i % 2 == 0,
               function (outer, collection)
               {
                   return {
                       outer: outer,
                       collection: collection.toArray()
                   }
-              },
-              function (key) { return key % 2 == 0; })
+              })
           .toArray();
       expected = [{ outer: 3, collection: [5] },
                   { outer: 3, collection: [5] },

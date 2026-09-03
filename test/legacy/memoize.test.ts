@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Functional", () => {
@@ -15,12 +15,12 @@ describe("Functional", () => {
       deepEqual(ar2, [1, 2, 3, 4, 5]);
       equal(5, count);
   
-      mem = Enumerable.from([1, 2, undefined, 3, 4])
+      const memWithUndefined = Enumerable.from([1, 2, undefined, 3, 4])
           .memoize();
   
-      ar1 = mem.toArray();
-      ar2 = mem.toArray();
-      deepEqual(ar1, [1, 2, undefined, 3, 4]);
-      deepEqual(ar2, [1, 2, undefined, 3, 4]);
+      const arWithUndefined1 = memWithUndefined.toArray();
+      const arWithUndefined2 = memWithUndefined.toArray();
+      deepEqual(arWithUndefined1, [1, 2, undefined, 3, 4]);
+      deepEqual(arWithUndefined2, [1, 2, undefined, 3, 4]);
   });
 });

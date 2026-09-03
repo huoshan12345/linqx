@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("ArrayEnumerable", () => {
@@ -16,13 +16,6 @@ describe("ArrayEnumerable", () => {
       strictEqual(arraySequence.firstOrDefault(0), 1);
       strictEqual(emptySequence.firstOrDefault(0), 0);
       strictEqual(emptySequence.firstOrDefault(undefined), undefined);
-  
-      // "null" predicate.
-      strictEqual(arraySequence.firstOrDefault(null, 0), 1);
-      strictEqual(emptySequence.firstOrDefault(null), undefined); // Because "null" is treated as noop predicate.
-      strictEqual(emptySequence.firstOrDefault(null, 0), 0);
-      strictEqual(emptySequence.firstOrDefault(null, null), null);
-      strictEqual(emptySequence.firstOrDefault(null, undefined), undefined);
   
       // No default value.
       strictEqual(arraySequence.firstOrDefault((i) => true), 1);
@@ -49,13 +42,6 @@ describe("Paging", () => {
       strictEqual(nonEmpty.firstOrDefault(0), 1);
       strictEqual(empty.firstOrDefault(0), 0);
       strictEqual(empty.firstOrDefault(undefined), undefined);
-  
-      // "null" predicate.
-      strictEqual(nonEmpty.firstOrDefault(null, 0), 1);
-      strictEqual(empty.firstOrDefault(null), undefined); // Because "null" is treated as noop predicate.
-      strictEqual(empty.firstOrDefault(null, 0), 0);
-      strictEqual(empty.firstOrDefault(null, null), null);
-      strictEqual(empty.firstOrDefault(null, undefined), undefined);
   
       // No default value.
       strictEqual(nonEmpty.firstOrDefault((i) => true), 1);

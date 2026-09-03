@@ -1,9 +1,11 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Dictionary", () => {
-  var aComparer = function (x) { return x.a }
+  interface ObjectKey { a: number }
+
+  var aComparer = function (x: ObjectKey) { return x.a }
 
   var obj1 = { a: 1 }
 
@@ -15,12 +17,13 @@ describe("Dictionary", () => {
 
   test("toEnumerable", function ()
   {
-      var dict = Enumerable.empty().toDictionary();
-      dict.add("a", 1);
-      dict.add("b", 2);
-      dict.add("c", 3);
+      const stringDictionary = Enumerable.empty<{ key: string; value: number }>()
+          .toDictionary((entry) => entry.key, (entry) => entry.value);
+      stringDictionary.add("a", 1);
+      stringDictionary.add("b", 2);
+      stringDictionary.add("c", 3);
   
-      var ar = dict.toEnumerable().orderBy((value) => value.key).toArray();
+      var ar = stringDictionary.toEnumerable().orderBy((value) => value.key).toArray();
       equal("a", ar[0].key);
       equal(1, ar[0].value);
       equal("b", ar[1].key);
@@ -28,31 +31,33 @@ describe("Dictionary", () => {
       equal("c", ar[2].key);
       equal(3, ar[2].value);
   
-      dict.clear();
-      dict.add(obj1, 1);
-      dict.add(obj1_, 2);
-      dict.add(obj2, 3);
-      dict.add(obj2_, 4);
+      const objectDictionary = Enumerable.empty<{ key: ObjectKey; value: number }>()
+          .toDictionary((entry) => entry.key, (entry) => entry.value);
+      objectDictionary.add(obj1, 1);
+      objectDictionary.add(obj1_, 2);
+      objectDictionary.add(obj2, 3);
+      objectDictionary.add(obj2_, 4);
   
-      ar = dict.toEnumerable().orderBy((value) => value.key.a).toArray();
-      equal(obj1, ar[0].key);
-      equal(1, ar[0].value);
-      equal(obj1_, ar[1].key);
-      equal(2, ar[1].value);
-      equal(obj2, ar[2].key);
-      equal(3, ar[2].value);
-      equal(obj2_, ar[3].key);
-      equal(4, ar[3].value);
+      const objectEntries = objectDictionary.toEnumerable().orderBy((value) => value.key.a).toArray();
+      equal(obj1, objectEntries[0].key);
+      equal(1, objectEntries[0].value);
+      equal(obj1_, objectEntries[1].key);
+      equal(2, objectEntries[1].value);
+      equal(obj2, objectEntries[2].key);
+      equal(3, objectEntries[2].value);
+      equal(obj2_, objectEntries[3].key);
+      equal(4, objectEntries[3].value);
   
-      dict = Enumerable.empty().toDictionary((value) => value, (value) => value, aComparer);
-      dict.add(obj1, 1);
-      dict.add(obj1_, 2);
-      dict.add(obj2, 3);
-      dict.add(obj2_, 4);
-      ar = dict.toEnumerable().orderBy((value) => value.key.a).toArray();
-      equal(obj1_, ar[0].key);
-      equal(2, ar[0].value);
-      equal(obj2_, ar[1].key);
-      equal(4, ar[1].value);
+      const comparedDictionary = Enumerable.empty<{ key: ObjectKey; value: number }>()
+          .toDictionary((entry) => entry.key, (entry) => entry.value, aComparer);
+      comparedDictionary.add(obj1, 1);
+      comparedDictionary.add(obj1_, 2);
+      comparedDictionary.add(obj2, 3);
+      comparedDictionary.add(obj2_, 4);
+      const comparedEntries = comparedDictionary.toEnumerable().orderBy((value) => value.key.a).toArray();
+      equal(obj1_, comparedEntries[0].key);
+      equal(2, comparedEntries[0].value);
+      equal(obj2_, comparedEntries[1].key);
+      equal(4, comparedEntries[1].value);
   });
 });

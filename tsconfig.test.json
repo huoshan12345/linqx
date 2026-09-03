@@ -1,10 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "useUnknownInCatchVariables": false
-  },
   "include": [
     "test/legacy/**/*.ts"
   ],

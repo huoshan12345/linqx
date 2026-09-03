@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Convert", () => {
@@ -14,7 +14,7 @@ describe("Convert", () => {
       actual = Enumerable.from(["a", "b", "c"])
           .toJSONString(function (key, value)
           {
-              if (typeof value === 'object') return value;
+              if (value == null || typeof value === 'object') return value;
               return value.toString().toUpperCase();
           });
       equal(actual, '["A","B","C"]');

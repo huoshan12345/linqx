@@ -1,10 +1,10 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Enumerable", () => {
   test("from", function () {
-      let actual = Enumerable.from("temp").toArray();
+      let actual: any = Enumerable.from("temp").toArray();
       deepEqual(actual, ["t", "e", "m", "p"]);
   
       actual = Enumerable.from(3).toArray();

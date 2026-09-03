@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Ordering", () => {
@@ -30,8 +30,8 @@ describe("Ordering", () => {
   
       deepEqual(Enumerable.rangeTo(1, 10).orderByDescending((value) => value%5).toArray(), [4, 9, 3, 8, 2, 7, 1, 6, 5, 10]);
   
-      actual = ['b', 'a', 'd', 'c'];
-      deepEqual(Enumerable.from(actual)
+      const letters = ['b', 'a', 'd', 'c'];
+      deepEqual(Enumerable.from(letters)
           .orderByDescending(x=>x, (x, y)=>x < y ? -1 : +(x > y)).toArray(), ['d', 'c', 'b', 'a']);
   });
 });

@@ -1,8 +1,11 @@
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 
 interface ObjectKey {
   a: number;
 }
+
+type Dictionary = Enumerable.IDictionary<string | ObjectKey, number>;
+type ComparedDictionary = Enumerable.IDictionary<ObjectKey, number>;
 
 const aComparer = (value: ObjectKey): number => value.a;
 const obj1 = { a: 1 };
@@ -10,15 +13,17 @@ const obj1Copy = { a: 1 };
 const obj2 = { a: 2 };
 const obj2Copy = { a: 2 };
 
-function createDictionary(): any {
-  return Enumerable.empty().toDictionary();
+function createDictionary(): Dictionary {
+  return Enumerable.empty<{ key: string | ObjectKey; value: number }>()
+    .toDictionary((entry) => entry.key, (entry) => entry.value);
 }
 
-function createComparedDictionary(): any {
-  return Enumerable.empty().toDictionary((value: unknown) => value, (value: unknown) => value, aComparer);
+function createComparedDictionary(): ComparedDictionary {
+  return Enumerable.empty<{ key: ObjectKey; value: number }>()
+    .toDictionary((entry) => entry.key, (entry) => entry.value, aComparer);
 }
 
-function addObjectEntries(dictionary: any): void {
+function addObjectEntries(dictionary: Enumerable.IDictionary<ObjectKey, number>): void {
   dictionary.add(obj1, 1);
   dictionary.add(obj1Copy, 2);
   dictionary.add(obj2, 3);

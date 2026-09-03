@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Iterator", () => {
@@ -14,7 +14,7 @@ describe("Iterator", () => {
   test("Symbol.iterator", function ()
   {
       let actual = [1,2,3,4];
-      let expected = Array.from(Enumerable.from(actual));
+      let expected: any = Array.from(Enumerable.from(actual));
       deepEqual(actual, expected);
       let actual2 = actual.map(function(x) { return x * 2 }); // [2,4,6,8];
       expected = Enumerable.from(actual).select(function(x) { return x * 2 });

@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("ArrayEnumerable", () => {
@@ -21,9 +21,8 @@ describe("Paging", () => {
       actual = Enumerable.range(1, 10).elementAtOrDefault(31, 0);
       strictEqual(actual, 0);
   
-      actual = Enumerable.range(1, 10).elementAtOrDefault(3, "foo");
-      strictEqual(actual, 4);
-      actual = Enumerable.range(1, 10).elementAtOrDefault(31, "foo");
-      strictEqual(actual, "foo");
+      const mixedSequence = Enumerable.from<number | string>([1, 2, 3, 4]);
+      strictEqual(mixedSequence.elementAtOrDefault(3, "foo"), 4);
+      strictEqual(mixedSequence.elementAtOrDefault(31, "foo"), "foo");
   });
 });

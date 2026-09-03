@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Grouping", () => {
@@ -7,8 +7,8 @@ describe("Grouping", () => {
 
   test("groupBy", function ()
   {
-      let actual = Enumerable.from(fileList)
-          .groupBy((file) => file.match(/\.(.+$)/)[1])
+      let actual: any = Enumerable.from(fileList)
+          .groupBy((file) => file.match(/\.(.+$)/)![1])
           .select((value) => ({key:value.key(),value:value.toArray()}))
           .toArray();
       let expected: any = [{ key: "xls", value: ["temp.xls", "temp2.xls", "temp3.xls"] },
@@ -17,7 +17,7 @@ describe("Grouping", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(fileList)
-          .groupBy((file) => file.match(/\.(.+$)/)[1], (file) => file.match(/(^.+)\..+$/)[1])
+          .groupBy((file) => file.match(/\.(.+$)/)![1], (file) => file.match(/(^.+)\..+$/)![1])
           .select((value) => ({key:value.key(),value:value.toArray()}))
           .toArray();
       expected = [{ key: "xls", value: ["temp", "temp2", "temp3"] },
@@ -25,7 +25,7 @@ describe("Grouping", () => {
                   { key: "jpg", value: ["temp"]}];
       deepEqual(actual, expected);
   
-      actual = Enumerable.from(fileList).groupBy((file) => file.match(/\.(.+$)/)[1],
+      actual = Enumerable.from(fileList).groupBy((file) => file.match(/\.(.+$)/)![1],
           (file) => file,
           (ext,group) => ({extension:ext,count:group.count(),files:group.toArray()}))
           .toArray();

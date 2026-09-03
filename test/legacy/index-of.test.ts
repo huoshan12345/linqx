@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Paging", () => {
@@ -7,13 +7,9 @@ describe("Paging", () => {
       let actual = Enumerable.range(1, 10).indexOf(3);
       strictEqual(actual, 2);
   
-      Enumerable.Utils.extendTo(Array);
+      strictEqual(Enumerable.from([1, 10, 100, 1000, 100, 100]).indexOf(100), 2);
   
-      strictEqual([1, 10, 100, 1000, 100, 100].asEnumerable().indexOf(100), 2);
-  
-      strictEqual([1, 2, 3, 3, 3, 4, 5].asEnumerable().indexOf(3), 2);
-      strictEqual([1, 2, 3, 3, 3, 4, 5].asEnumerable().indexOf(function (x) { return x == 3; }), 2);
-  
-      Enumerable.Utils.recallFrom(Array);
+      strictEqual(Enumerable.from([1, 2, 3, 3, 3, 4, 5]).indexOf(3), 2);
+      strictEqual(Enumerable.from([1, 2, 3, 3, 3, 4, 5]).indexOf(function (x) { return x == 3; }), 2);
   });
 });

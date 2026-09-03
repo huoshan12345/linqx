@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Ordering", () => {
@@ -23,9 +23,9 @@ describe("Ordering", () => {
   ];
 
   test("weightedSample", function () {
-      var result = Enumerable.from([1, 25, 35, 39]).weightedSample()
+      var result = Enumerable.from([1, 25, 35, 39]).weightedSample((value) => value)
           .take(10000)
-          .groupBy()
+          .groupBy((value) => value)
           .toObject((value) => value.key(), (value) => value.count());
   
       ok((function (x) { return 0 < x && x < 200 })(result[1]));
@@ -35,11 +35,11 @@ describe("Ordering", () => {
   
       strictEqual(Enumerable.from(result).sum(function (x) { return x.value }), 10000);
   
-      result = Enumerable.from([1, 99]).weightedSample().take(10000).groupBy().toObject((value) => value.key(), (value) => value.count());
+      result = Enumerable.from([1, 99]).weightedSample((value) => value).take(10000).groupBy((value) => value).toObject((value) => value.key(), (value) => value.count());
       ok((function (x) { return 0 < x && x < 200 })(result[1]));
       ok((function (x) { return 9800 < x && x < 10000 })(result[99]));
   
-      result = Enumerable.from([0, 1]).weightedSample().take(10000).groupBy().toObject((value) => value.key(), (value) => value.count());
+      result = Enumerable.from([0, 1]).weightedSample((value) => value).take(10000).groupBy((value) => value).toObject((value) => value.key(), (value) => value.count());
       ok(result[0] === undefined);
       strictEqual(result[1], 10000);
   });

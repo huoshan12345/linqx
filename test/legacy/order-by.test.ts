@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Ordering", () => {
@@ -30,10 +30,9 @@ describe("Ordering", () => {
   
       deepEqual(Enumerable.rangeTo(10, 1).orderBy((value) => value%5).toArray(), [10, 5, 6, 1, 7, 2, 8, 3, 9, 4]);
   
-      actual = ['b', 'a', 'd', 'c'];
-      deepEqual(Enumerable.from(actual).orderBy().toArray(), ['a', 'b', 'c', 'd']);
-      deepEqual(Enumerable.from(actual).orderBy(x=>x, (x,y) => x.localeCompare(y)).toArray(), ['a', 'b', 'c', 'd']);
-      deepEqual(Enumerable.from(actual).orderBy(x=>x, (x,y)=>(x < y) ? 1 : (x == y) ? 0 : -1).toArray(), ['d', 'c', 'b', 'a']);
-      deepEqual(Enumerable.from(actual).orderBy(x=>x, (x,y)=>(x < y) ? 1 : -1).toArray(), ['d', 'c', 'b', 'a']);
+      const letters = ['b', 'a', 'd', 'c'];
+      deepEqual(Enumerable.from(letters).orderBy(x=>x, (x,y) => x.localeCompare(y)).toArray(), ['a', 'b', 'c', 'd']);
+      deepEqual(Enumerable.from(letters).orderBy(x=>x, (x,y)=>(x < y) ? 1 : (x == y) ? 0 : -1).toArray(), ['d', 'c', 'b', 'a']);
+      deepEqual(Enumerable.from(letters).orderBy(x=>x, (x,y)=>(x < y) ? 1 : -1).toArray(), ['d', 'c', 'b', 'a']);
   });
 });

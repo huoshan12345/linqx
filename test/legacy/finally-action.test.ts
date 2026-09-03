@@ -1,11 +1,11 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("ErrorHandling", () => {
   test("finallyAction", function ()
   {
-      var msg;
+      let msg = "";
       let actual = Enumerable.range(1, 10)
           .select(function (i)
           {
@@ -14,9 +14,9 @@ describe("ErrorHandling", () => {
           })
           .catchError(function (e)
           {
-              msg = e.message;
+              msg = e instanceof Error ? e.message : String(e);
           })
-          .finallyAction(function (f)
+          .finallyAction(function ()
           {
               msg += "f";
           })

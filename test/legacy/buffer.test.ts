@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../legacy-enumerable.js';
+import Enumerable from '../../index.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from '../test-utils.js';
 
 describe("Grouping", () => {
@@ -7,7 +7,7 @@ describe("Grouping", () => {
 
   test("buffer", function ()
   {
-      let actual = Enumerable.range(1, 10).buffer("3").toArray();
+      let actual = Enumerable.range(1, 10).buffer(3).toArray();
       let expected = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]];
       deepEqual(actual, expected);
   });
