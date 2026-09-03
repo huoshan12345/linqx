@@ -8,8 +8,8 @@ describe("Set", () => {
           .except([4, 6, 2, 7, 8, 10, 11])
           .toArray();
       deepEqual(actual, [1, 3, 5, 9]);
-      actual = Enumerable.range(1, 10).select("{test:$%3}")
-          .except(Enumerable.range(1, 10).select("{test:$%2}"), "$.test")
+      actual = Enumerable.range(1, 10).select((value) => ({test:value%3}))
+          .except(Enumerable.range(1, 10).select((value) => ({test:value%2})), (value) => value.test)
           .toArray();
       deepEqual(actual, [{ test: 2 }]);
   });

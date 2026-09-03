@@ -8,7 +8,7 @@ describe("Join", () => {
       var array1 = [3, 3, 4, 5, 6];
       var array2 = [2, 4, 5, 6, 6];
       let actual = Enumerable.from(array1)
-          .groupJoin(array2, " i => i", " i => i",
+          .groupJoin(array2, (i) => i, (i) => i,
               function (outer, collection)
               {
                   return {
@@ -25,7 +25,7 @@ describe("Join", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(array1)
-          .groupJoin(array2, " i => i", " i => i",
+          .groupJoin(array2, (i) => i, (i) => i,
               function (outer, collection)
               {
                   return {

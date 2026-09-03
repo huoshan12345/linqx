@@ -8,8 +8,8 @@ describe("Set", () => {
   
       deepEqual([9, 1, 3, 5, 7, 7, 7, 3, 4, 2, 2, 9].distinctUntilChanged().toArray(), [9, 1, 3, 5, 7, 3, 4, 2, 9]);
       deepEqual([1, 3, 3, 3, 1, 2, 6, 3, 5, 1]
-          .select("{test:$}")
-          .distinctUntilChanged("$.test").toArray(),
+          .select((value) => ({test:value}))
+          .distinctUntilChanged((value) => value.test).toArray(),
           [{ test: 1 }, { test: 3 }, { test: 1 }, { test: 2 }, { test: 6 }, { test: 3 }, { test: 5 }, { test: 1 }]);
   
       deepEqual([1].distinctUntilChanged().toArray(), [1]);

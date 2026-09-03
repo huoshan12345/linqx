@@ -10,8 +10,8 @@ describe("ArrayEnumerable", () => {
   test("any", function () {
       ok(arraySequence.any());
       ok(!emptySequence.any());
-      ok(arraySequence.any("$==100"));
-      ok(!emptySequence.any("$==2"));
+      ok(arraySequence.any((value) => value==100));
+      ok(!emptySequence.any((value) => value==2));
   });
 });
 
@@ -21,7 +21,7 @@ describe("Set", () => {
       var empty = Enumerable.empty();
       ok(seq.any());
       ok(!empty.any());
-      ok(seq.any("$==5"));
-      ok(!seq.any("$==100"));
+      ok(seq.any((value) => value==5));
+      ok(!seq.any((value) => value==100));
   });
 });

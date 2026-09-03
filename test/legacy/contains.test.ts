@@ -9,9 +9,9 @@ describe("Set", () => {
       ok(seq.contains(5));
       ok(!seq.contains(13));
   
-      seq = Enumerable.range(1, 10).select("{test:$%2}");
-      ok(seq.contains(1, "$.test"));
-      ok(!seq.contains(3, "$.test"));
+      seq = Enumerable.range(1, 10).select((value) => ({test:value%2}));
+      ok(seq.contains(1, (value) => value.test));
+      ok(!seq.contains(3, (value) => value.test));
   });
 });
 

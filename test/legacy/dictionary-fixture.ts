@@ -15,7 +15,7 @@ function createDictionary(): any {
 }
 
 function createComparedDictionary(): any {
-  return Enumerable.empty().toDictionary('', '', aComparer);
+  return Enumerable.empty().toDictionary((value: unknown) => value, (value: unknown) => value, aComparer);
 }
 
 function addObjectEntries(dictionary: any): void {

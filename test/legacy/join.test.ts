@@ -8,8 +8,8 @@ describe("Join", () => {
       var math = { yamada: 100, tanaka: 80, yoshida: 94 };
       var english = { yamada: 73, yoshida: 26, tanaka: 99 };
       let actual = Enumerable.from(math)
-          .join(english, "outer=>outer.key", "inner=>inner.key",
-              "o,i=>{Name:o.key,Math:o.value,English:i.value}")
+          .join(english, (outer) => outer.key, (inner) => inner.key,
+              (o,i) => ({Name:o.key,Math:o.value,English:i.value}))
           .toArray();
       let expected: any = [{ Name: "yamada", Math: 100, English: 73 },
                       { Name: "tanaka", Math: 80, English: 99 },
@@ -17,8 +17,8 @@ describe("Join", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(math)
-          .join(english, "outer=>outer", "inner=>inner",
-              "o,i=>{Name:o.key,Math:o.value,English:i.value}", "$.key")
+          .join(english, (outer) => outer, (inner) => inner,
+              (o,i) => ({Name:o.key,Math:o.value,English:i.value}), (value) => value.key)
           .toArray();
       expected = [{ Name: "yamada", Math: 100, English: 73 },
                   { Name: "tanaka", Math: 80, English: 99 },
@@ -26,8 +26,8 @@ describe("Join", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(math)
-          .join(english, "outer=>outer.key", "inner=>inner.key",
-              "(o,i)=>{return {Name:o.key, Math:o.value, English:i.value}}")
+          .join(english, (outer) => outer.key, (inner) => inner.key,
+              (o,i) => {return {Name:o.key, Math:o.value, English:i.value}})
           .toArray();
   
       expected = [{ Name: "yamada", Math: 100, English: 73 },
@@ -37,8 +37,8 @@ describe("Join", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(math)
-          .join(english, "outer=>outer.key", "inner=>inner.key",
-              "(o,i)=>{returnVal: o.key}")
+          .join(english, (outer) => outer.key, (inner) => inner.key,
+              (o,i) => ({returnVal: o.key}))
           .toArray();
   
       expected = [{ returnVal: "yamada" }, { returnVal: "tanaka" }, { returnVal: "yoshida"}];

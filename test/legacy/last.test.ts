@@ -9,10 +9,10 @@ describe("ArrayEnumerable", () => {
 
   test("last", function () {
       equal(arraySequence.last(), 10000);
-      equal(arraySequence.last("$<=500"), 100);
+      equal(arraySequence.last((value) => value<=500), 100);
   
       try {
-          arraySequence.last("$==-1");
+          arraySequence.last((value) => value==-1);
           ok(false);
       }
       catch (e) { ok(true); }
@@ -30,7 +30,7 @@ describe("Paging", () => {
       let actual = Enumerable.range(1, 10).last();
       strictEqual(actual, 10);
   
-      actual = Enumerable.range(1, 10).last("i=>i<6");
+      actual = Enumerable.range(1, 10).last((i) => i<6);
       strictEqual(actual, 5);
   });
 });

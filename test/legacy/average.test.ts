@@ -5,6 +5,6 @@ import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqu
 describe("Aggregate", () => {
   test("average", function () {
       strictEqual(Enumerable.range(1, 10).average(), 5.5);
-      strictEqual(Enumerable.range(1, 10).select("v,i=>{v:v,i:i}").average("t=>t.i"), 4.5);
+      strictEqual(Enumerable.range(1, 10).select((v,i) => ({v:v,i:i})).average((t) => t.i), 4.5);
   });
 });

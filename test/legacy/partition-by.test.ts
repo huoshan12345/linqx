@@ -8,8 +8,8 @@ describe("Grouping", () => {
   test("partitionBy", function ()
   {
       let actual = Enumerable.from(fileList)
-          .partitionBy("file=>file.match(/\\.(.+$)/)[1]")
-          .select("{key:$.key(),value:$.toArray()}")
+          .partitionBy((file) => file.match(/\.(.+$)/)[1])
+          .select((value) => ({key:value.key(),value:value.toArray()}))
           .toArray();
       let expected: any = [{ key: "xls", value: ["temp.xls", "temp2.xls"] },
                   { key: "pdf", value: ["temp.pdf"] },
@@ -20,8 +20,8 @@ describe("Grouping", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(fileList)
-          .partitionBy("file=>file.match(/\\.(.+$)/)[1]", "file=>file.match(/(^.+)\\..+$/)[1]")
-          .select("{key:$.key(),value:$.toArray()}")
+          .partitionBy((file) => file.match(/\.(.+$)/)[1], (file) => file.match(/(^.+)\..+$/)[1])
+          .select((value) => ({key:value.key(),value:value.toArray()}))
           .toArray();
       expected = [{ key: "xls", value: ["temp", "temp2"] },
                   { key: "pdf", value: ["temp"] },
@@ -32,9 +32,9 @@ describe("Grouping", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(fileList)
-          .partitionBy("file=>file.match(/\\.(.+$)/)[1]",
-              "file=>file",
-              "ext,group=>{extension:ext,count:group.count(),files:group.toArray()}")
+          .partitionBy((file) => file.match(/\.(.+$)/)[1],
+              (file) => file,
+              (ext,group) => ({extension:ext,count:group.count(),files:group.toArray()}))
           .toArray();
       expected = [{ extension: "xls", count: 2, files: ["temp.xls", "temp2.xls"] },
                   { extension: "pdf", count: 1, files: ["temp.pdf"] },
@@ -53,7 +53,7 @@ describe("Grouping", () => {
           { Date: new Date(2010, 5, 5), Id: 6 }
       ]
       actual = Enumerable.from(objects)
-          .partitionBy("$.Date", "$.Id",
+          .partitionBy((value) => value.Date, (value) => value.Id,
               function (key, group) { return key.getFullYear() + "-" + group.toJoinedString(',') },
               function (key) { return key.toString() })
           .toArray();

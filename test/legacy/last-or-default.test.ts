@@ -25,14 +25,14 @@ describe("ArrayEnumerable", () => {
       strictEqual(emptySequence.lastOrDefault(null, undefined), undefined);
   
       // No default value.
-      strictEqual(arraySequence.lastOrDefault("i=>true"), 10000);
-      strictEqual(emptySequence.lastOrDefault("i=>true"), undefined);
+      strictEqual(arraySequence.lastOrDefault((i) => true), 10000);
+      strictEqual(emptySequence.lastOrDefault((i) => true), undefined);
   
       // Both arguments.
-      strictEqual(arraySequence.lastOrDefault("i=>true", 0), 10000);
-      strictEqual(emptySequence.lastOrDefault("i=>true", 0), 0);
-      strictEqual(emptySequence.lastOrDefault("i=>true", null), null);
-      strictEqual(emptySequence.lastOrDefault("i=>true", undefined), undefined);
+      strictEqual(arraySequence.lastOrDefault((i) => true, 0), 10000);
+      strictEqual(emptySequence.lastOrDefault((i) => true, 0), 0);
+      strictEqual(emptySequence.lastOrDefault((i) => true, null), null);
+      strictEqual(emptySequence.lastOrDefault((i) => true, undefined), undefined);
   });
 });
 
@@ -58,13 +58,13 @@ describe("Paging", () => {
       strictEqual(empty.lastOrDefault(null, undefined), undefined);
   
       // No default value.
-      strictEqual(nonEmpty.lastOrDefault("i=>true"), 10);
-      strictEqual(empty.lastOrDefault("i=>true"), undefined);
+      strictEqual(nonEmpty.lastOrDefault((i) => true), 10);
+      strictEqual(empty.lastOrDefault((i) => true), undefined);
   
       // Both arguments.
-      strictEqual(nonEmpty.lastOrDefault("i=>true", 0), 10);
-      strictEqual(empty.lastOrDefault("i=>true", 0), 0);
-      strictEqual(empty.lastOrDefault("i=>true", null), null);
-      strictEqual(empty.lastOrDefault("i=>true", undefined), undefined);
+      strictEqual(nonEmpty.lastOrDefault((i) => true, 0), 10);
+      strictEqual(empty.lastOrDefault((i) => true, 0), 0);
+      strictEqual(empty.lastOrDefault((i) => true, null), null);
+      strictEqual(empty.lastOrDefault((i) => true, undefined), undefined);
   });
 });

@@ -20,7 +20,7 @@ describe("Dictionary", () => {
       dict.add("b", 2);
       dict.add("c", 3);
   
-      var ar = dict.toEnumerable().orderBy("$.key").toArray();
+      var ar = dict.toEnumerable().orderBy((value) => value.key).toArray();
       equal("a", ar[0].key);
       equal(1, ar[0].value);
       equal("b", ar[1].key);
@@ -34,7 +34,7 @@ describe("Dictionary", () => {
       dict.add(obj2, 3);
       dict.add(obj2_, 4);
   
-      ar = dict.toEnumerable().orderBy("$.key.a").toArray();
+      ar = dict.toEnumerable().orderBy((value) => value.key.a).toArray();
       equal(obj1, ar[0].key);
       equal(1, ar[0].value);
       equal(obj1_, ar[1].key);
@@ -44,12 +44,12 @@ describe("Dictionary", () => {
       equal(obj2_, ar[3].key);
       equal(4, ar[3].value);
   
-      dict = Enumerable.empty().toDictionary("", "", aComparer);
+      dict = Enumerable.empty().toDictionary((value) => value, (value) => value, aComparer);
       dict.add(obj1, 1);
       dict.add(obj1_, 2);
       dict.add(obj2, 3);
       dict.add(obj2_, 4);
-      ar = dict.toEnumerable().orderBy("$.key.a").toArray();
+      ar = dict.toEnumerable().orderBy((value) => value.key.a).toArray();
       equal(obj1_, ar[0].key);
       equal(2, ar[0].value);
       equal(obj2_, ar[1].key);

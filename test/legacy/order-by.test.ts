@@ -24,15 +24,15 @@ describe("Ordering", () => {
 
   test("orderBy", function () {
       actual = Enumerable.from([1, 51, 7, 823, 85, 31, 51, 99])
-          .orderBy("i=>i")
+          .orderBy((i) => i)
           .toArray();
       deepEqual(actual, [1, 7, 31, 51, 51, 85, 99, 823]);
   
-      deepEqual(Enumerable.rangeTo(10, 1).orderBy("$%5").toArray(), [10, 5, 6, 1, 7, 2, 8, 3, 9, 4]);
+      deepEqual(Enumerable.rangeTo(10, 1).orderBy((value) => value%5).toArray(), [10, 5, 6, 1, 7, 2, 8, 3, 9, 4]);
   
       actual = ['b', 'a', 'd', 'c'];
       deepEqual(Enumerable.from(actual).orderBy().toArray(), ['a', 'b', 'c', 'd']);
-      deepEqual(Enumerable.from(actual).orderBy(x=>x, "(x,y)=>x.localeCompare(y)").toArray(), ['a', 'b', 'c', 'd']);
+      deepEqual(Enumerable.from(actual).orderBy(x=>x, (x,y) => x.localeCompare(y)).toArray(), ['a', 'b', 'c', 'd']);
       deepEqual(Enumerable.from(actual).orderBy(x=>x, (x,y)=>(x < y) ? 1 : (x == y) ? 0 : -1).toArray(), ['d', 'c', 'b', 'a']);
       deepEqual(Enumerable.from(actual).orderBy(x=>x, (x,y)=>(x < y) ? 1 : -1).toArray(), ['d', 'c', 'b', 'a']);
   });

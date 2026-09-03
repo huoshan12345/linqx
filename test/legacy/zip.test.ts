@@ -4,9 +4,9 @@ import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqu
 
 describe("Projection", () => {
   test("zip", function () {
-      let actual = Enumerable.range(1, 10).zip(Enumerable.range(20, 5), "outer,inner=>outer+inner").toArray();
+      let actual = Enumerable.range(1, 10).zip(Enumerable.range(20, 5), (outer,inner) => outer+inner).toArray();
       deepEqual(actual, [21, 23, 25, 27, 29]);
-      actual = Enumerable.range(1, 10).zip(Enumerable.range(20, 5), "outer,inner,index=>outer+inner+index").toArray();
+      actual = Enumerable.range(1, 10).zip(Enumerable.range(20, 5), (outer,inner,index) => outer+inner+index).toArray();
       deepEqual(actual, [21, 24, 27, 30, 33]);
   });
 

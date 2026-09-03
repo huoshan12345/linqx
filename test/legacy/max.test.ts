@@ -7,7 +7,7 @@ describe("Aggregate", () => {
       let actual = Enumerable.range(1, 10).max();
       equal(actual, 10);
   
-      actual = Enumerable.range(1, 10).select("v,i=>{v:v,i:i}").max("t=>t.i");
+      actual = Enumerable.range(1, 10).select((v,i) => ({v:v,i:i})).max((t) => t.i);
       equal(actual, 9);
   });
 });

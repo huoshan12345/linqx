@@ -9,7 +9,7 @@ describe("Aggregate", () => {
       actual = Enumerable.empty().sum();
       equal(actual, 0);
   
-      actual = Enumerable.range(1, 10).select("v,i=>{v:v,i:i}").sum("t=>t.i");
+      actual = Enumerable.range(1, 10).select((v,i) => ({v:v,i:i})).sum((t) => t.i);
       equal(actual, 45);
   });
 });

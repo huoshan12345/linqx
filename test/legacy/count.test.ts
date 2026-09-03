@@ -10,7 +10,7 @@ describe("Aggregate", () => {
       actual = Enumerable.empty().count();
       equal(actual, 0);
   
-      actual = Enumerable.range(1, 10).count("i=>i<5");
+      actual = Enumerable.range(1, 10).count((i) => i<5);
       equal(actual, 4);
   });
 });
@@ -23,8 +23,8 @@ describe("ArrayEnumerable", () => {
   test("count", function () {
       equal(arraySequence.count(), 5);
       equal(emptySequence.count(), 0);
-      equal(arraySequence.count("$<=100"), 3);
-      equal(emptySequence.count("$<=100"), 0);
+      equal(arraySequence.count((value) => value<=100), 3);
+      equal(emptySequence.count((value) => value<=100), 0);
   });
 });
 

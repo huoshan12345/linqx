@@ -10,7 +10,7 @@ describe("Functional", () => {
           {
               return e.zip(e, function (a, b) { return { a: a, b: b} });
           })
-          .select("$.a + $.b")
+          .select((value) => value.a + value.b)
           .sum();
       equal(sum, 110);
   

@@ -7,7 +7,7 @@ describe("Aggregate", () => {
       let actual = Enumerable.range(1, 10).min();
       equal(actual, 1);
   
-      actual = Enumerable.range(1, 10).select("v,i=>{v:v,i:i}").min("t=>t.i");
+      actual = Enumerable.range(1, 10).select((v,i) => ({v:v,i:i})).min((t) => t.i);
       equal(actual, 0);
   });
 });

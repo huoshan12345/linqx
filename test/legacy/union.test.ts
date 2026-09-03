@@ -8,8 +8,8 @@ describe("Set", () => {
           .union([4, 6, 2, 7, 8, 10, 11])
           .toArray();
       deepEqual(actual, [1, 3, 5, 6, 4, 2, 9, 7, 8, 10, 11]);
-      actual = Enumerable.range(1, 3).select("{test:$}")
-          .union(Enumerable.range(2, 3).select("{test:$}"), "$.test")
+      actual = Enumerable.range(1, 3).select((value) => ({test:value}))
+          .union(Enumerable.range(2, 3).select((value) => ({test:value})), (value) => value.test)
           .toArray();
       deepEqual(actual, [{ test: 1 }, { test: 2 }, { test: 3 }, { test: 4 }]);
   });

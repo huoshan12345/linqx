@@ -4,11 +4,11 @@ import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqu
 
 describe("Enumerable", () => {
   test("matches", function () {
-      let actual = Enumerable.matches("xbcyBCzbc", /(.)bc/i).select("$.index+$[1]").toArray();
+      let actual = Enumerable.matches("xbcyBCzbc", /(.)bc/i).select((value) => value.index+value[1]).toArray();
       deepEqual(actual, ["0x", "3y", "6z"]);
-      actual = Enumerable.matches("xbcyBCzbc", "(.)bc").select("$.index+$[1]").toArray();;
+      actual = Enumerable.matches("xbcyBCzbc", "(.)bc").select((value) => value.index+value[1]).toArray();;
       deepEqual(actual, ["0x", "6z"]);
-      actual = Enumerable.matches("xbcyBCzbc", "(.)bc", "i").select("$.index+$[1]").toArray();;
+      actual = Enumerable.matches("xbcyBCzbc", "(.)bc", "i").select((value) => value.index+value[1]).toArray();;
       deepEqual(actual, ["0x", "3y", "6z"]);
   });
 });

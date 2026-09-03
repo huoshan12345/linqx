@@ -24,11 +24,11 @@ describe("Ordering", () => {
 
   test("orderByDescending", function () {
       actual = Enumerable.from([1, 51, 7, 823, 85, 31, 51, 99])
-          .orderByDescending("i=>i")
+          .orderByDescending((i) => i)
           .toArray();
       deepEqual(actual, [823, 99, 85, 51, 51, 31, 7, 1]);
   
-      deepEqual(Enumerable.rangeTo(1, 10).orderByDescending("$%5").toArray(), [4, 9, 3, 8, 2, 7, 1, 6, 5, 10]);
+      deepEqual(Enumerable.rangeTo(1, 10).orderByDescending((value) => value%5).toArray(), [4, 9, 3, 8, 2, 7, 1, 6, 5, 10]);
   
       actual = ['b', 'a', 'd', 'c'];
       deepEqual(Enumerable.from(actual)

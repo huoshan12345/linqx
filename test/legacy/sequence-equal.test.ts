@@ -20,12 +20,12 @@ describe("Set", () => {
       ok(!Enumerable.from([1, 3, 5, 6, 6, 3, 4, 3, 2, 9]).sequenceEqual([1, 3, 5]));
       ok(Enumerable.range(1, 10).sequenceEqual(Enumerable.range(1, 10)));
   
-      ok(!Enumerable.range(1, 10).select("{test:$%3}")
-          .sequenceEqual(Enumerable.range(1, 10).select("{test:$%2}"), "$.test"));
+      ok(!Enumerable.range(1, 10).select((value) => ({test:value%3}))
+          .sequenceEqual(Enumerable.range(1, 10).select((value) => ({test:value%2})), (value) => value.test));
   
       ok(Enumerable.range(1, 10)
-          .select("{test:$%3}")
-          .distinct("$.test")
-          .sequenceEqual([{ test: 1 }, { test: 2 }, { test: 0 }], "$.test"));
+          .select((value) => ({test:value%3}))
+          .distinct((value) => value.test)
+          .sequenceEqual([{ test: 1 }, { test: 2 }, { test: 0 }], (value) => value.test));
   });
 });

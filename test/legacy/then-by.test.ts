@@ -24,9 +24,9 @@ describe("Ordering", () => {
 
   test("thenBy", function () {
       actual = Enumerable.from(list)
-          .orderBy("l=>l.a")
-          .thenBy("l=>l.b")
-          .thenBy("l=>l.c")
+          .orderBy((l) => l.a)
+          .thenBy((l) => l.b)
+          .thenBy((l) => l.c)
           .toArray();
       expected = [
           { a: 2, b: 3, c: 7 },
@@ -39,9 +39,9 @@ describe("Ordering", () => {
       deepEqual(actual, expected);
   
       actual = Enumerable.from(strlist)
-          .orderBy("l=>l.a")
-          .thenBy("l=>l.b")
-          .thenBy("l=>l.c")
+          .orderBy((l) => l.a)
+          .thenBy((l) => l.b)
+          .thenBy((l) => l.c)
           .toArray();
       expected = [
           { a: "a", b: "c", c: "k" },

@@ -4,7 +4,7 @@ import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqu
 
 describe("Enumerable", () => {
   test("toNegativeInfinity", function () {
-      let actual = Enumerable.toNegativeInfinity().where("i=>i%2==0").take(10).toArray();
+      let actual = Enumerable.toNegativeInfinity().where((i) => i%2==0).take(10).toArray();
       deepEqual(actual, [0, -2, -4, -6, -8, -10, -12, -14, -16, -18]);
       actual = Enumerable.toNegativeInfinity(3).take(10).toArray();
       deepEqual(actual, [3, 2, 1, 0, -1, -2, -3, -4, -5, -6]);
