@@ -21,7 +21,7 @@
   "include": [
     "index.ts",
     "linqx.ts",
-    "test/**/*.ts",
+    "test/*.ts",
     "vite.config.ts",
     "vitest.config.ts"
   ],
