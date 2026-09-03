@@ -24,3 +24,21 @@ describe('Dictionary', () => {
     equal(comparedDictionary.count(), 0);
   });
 });
+test('clear is idempotent', () => {
+  const dictionary = createDictionary();
+  dictionary.add('a', 1);
+
+  dictionary.clear();
+  dictionary.clear();
+
+  expect(dictionary.count()).toBe(0);
+});
+
+test('clear allows the dictionary to be reused', () => {
+  const dictionary = createDictionary();
+  dictionary.add('a', 1);
+  dictionary.clear();
+  dictionary.add('b', 2);
+
+  expect(dictionary.get('b')).toBe(2);
+});

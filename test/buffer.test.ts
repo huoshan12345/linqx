@@ -1,14 +1,19 @@
 import { describe } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from './test-utils.js';
+import { deepEqual, test } from './test-utils.js';
 
 describe("Grouping", () => {
-  var fileList = ["temp.xls", "temp2.xls", "temp.pdf", "temp.jpg", "temp2.pdf", "temp3.xls"];
-
-  test("buffer", function ()
-  {
-      let actual = Enumerable.range(1, 10).buffer(3).toArray();
-      let expected = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]];
-      deepEqual(actual, expected);
+  test("buffer", function () {
+    const actual = Enumerable.range(1, 10).buffer(3).toArray();
+    const expected = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10]];
+    deepEqual(actual, expected);
   });
+});
+test('buffer emits a final partial buffer', () => {
+  expect(Enumerable.range(1, 5).buffer(2).toArray()).toEqual([[1, 2], [3, 4], [5]]);
+});
+
+test('buffer rejects non-positive sizes', () => {
+  expect(() => Enumerable.range(1, 3).buffer(0)).toThrow(RangeError);
+  expect(() => Enumerable.range(1, 3).buffer(-1)).toThrow(RangeError);
 });

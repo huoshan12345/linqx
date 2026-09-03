@@ -1,23 +1,42 @@
 import { describe } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from './test-utils.js';
+import { deepEqual, equal, test } from './test-utils.js';
 
 describe("ErrorHandling", () => {
-  test("catchError", function ()
-  {
-      var msg;
-      let actual = Enumerable.range(1, 10)
-          .select(function (i)
-          {
-              if (i == 5) throw new Error("aiueo");
-              return i;
-          })
-          .catchError(function (e)
-          {
-              msg = e instanceof Error ? e.message : String(e);
-          })
-          .toArray();
-      deepEqual(actual, [1, 2, 3, 4]);
-      equal(msg,"aiueo");
+  test("catchError", function () {
+    let msg;
+    const actual = Enumerable.range(1, 10)
+      .select(function (i) {
+        if (i === 5) throw new Error("aiueo");
+        return i;
+      })
+      .catchError(function (e) {
+        msg = e instanceof Error ? e.message : String(e);
+      })
+      .toArray();
+    deepEqual(actual, [1, 2, 3, 4]);
+    equal(msg, "aiueo");
   });
+});
+test('catchError passes through a sequence that does not fail', () => {
+  const handler = vi.fn();
+
+  expect(Enumerable.range(1, 3).catchError(handler).toArray()).toEqual([1, 2, 3]);
+  expect(handler).not.toHaveBeenCalled();
+});
+
+test('catchError completes after handling the first source error', () => {
+  const errors: unknown[] = [];
+  const result = Enumerable.range(1, 5)
+    .select(value => {
+      if (value === 3) {
+        throw new Error('failed');
+      }
+      return value;
+    })
+    .catchError(error => errors.push(error))
+    .toArray();
+
+  expect(result).toEqual([1, 2]);
+  expect(errors).toHaveLength(1);
 });

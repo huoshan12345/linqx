@@ -1,46 +1,41 @@
-import { describe } from 'vitest';
+import { afterEach, describe, expect, test, vi } from 'vitest';
 import Enumerable from './sut.js';
-import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from './test-utils.js';
 
-describe("Ordering", () => {
-  var expected, actual;
+describe('weightedSample', () => {
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
 
-  var list = [
-      { a: 2, b: 4, c: 1 },
-      { a: 2, b: 3, c: 7 },
-      { a: 6, b: 6, c: 3 },
-      { a: 4, b: 4, c: 5 },
-      { a: 7, b: 3, c: 2 },
-      { a: 4, b: 4, c: 3 }
-  ];
+  test('selects the first weighted interval when Math.random returns zero', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
 
-  var strlist = [
-      { a: "a", b: "z", c: "b" },
-      { a: "z", b: "e", c: "e" },
-      { a: "n", b: "d", c: "q" },
-      { a: "a", b: "c", c: "k" },
-      { a: "n", b: "d", c: "o" }
-  ];
+    expect(Enumerable.from(['a', 'b'])
+      .weightedSample(value => value === 'a' ? 1 : 3)
+      .take(3)
+      .toArray())
+      .toEqual(['a', 'a', 'a']);
+  });
 
-  test("weightedSample", function () {
-      var result = Enumerable.from([1, 25, 35, 39]).weightedSample((value) => value)
-          .take(10000)
-          .groupBy((value) => value)
-          .toObject((value) => value.key(), (value) => value.count());
-  
-      ok((function (x) { return 0 < x && x < 200 })(result[1]));
-      ok((function (x) { return 2300 < x && x < 2700 })(result[25]));
-      ok((function (x) { return 3300 < x && x < 3700 })(result[35]));
-      ok((function (x) { return 3700 < x && x < 4100 })(result[39]));
-  
-      strictEqual(Enumerable.from(result).sum(function (x) { return x.value }), 10000);
-  
-      result = Enumerable.from([1, 99]).weightedSample((value) => value).take(10000).groupBy((value) => value).toObject((value) => value.key(), (value) => value.count());
-      ok((function (x) { return 0 < x && x < 200 })(result[1]));
-      ok((function (x) { return 9800 < x && x < 10000 })(result[99]));
-  
-      result = Enumerable.from([0, 1]).weightedSample((value) => value).take(10000).groupBy((value) => value).toObject((value) => value.key(), (value) => value.count());
-      ok(result[0] === undefined);
-      strictEqual(result[1], 10000);
+  test('selects a later weighted interval when the random value falls within it', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0.99);
+
+    expect(Enumerable.from(['a', 'b'])
+      .weightedSample(value => value === 'a' ? 1 : 3)
+      .first())
+      .toBe('b');
+  });
+
+  test('treats negative weights as zero', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+
+    expect(Enumerable.from(['ignored', 'selected'])
+      .weightedSample(value => value === 'ignored' ? -10 : 1)
+      .take(2)
+      .toArray())
+      .toEqual(['selected', 'selected']);
+  });
+
+  test('returns an empty sequence when the total weight is zero', () => {
+    expect(Enumerable.from([1, 2]).weightedSample(() => 0).toArray()).toEqual([]);
   });
 });

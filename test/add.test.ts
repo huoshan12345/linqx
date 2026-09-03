@@ -36,3 +36,19 @@ describe('Dictionary', () => {
     equal(comparedDictionary.get(obj2Copy), 4);
   });
 });
+test('add replaces an existing key without increasing the count', () => {
+  const dictionary = createDictionary();
+  dictionary.add('a', 1);
+  dictionary.add('a', 2);
+
+  expect(dictionary.get('a')).toBe(2);
+  expect(dictionary.count()).toBe(1);
+});
+
+test('add keeps object keys distinct without a comparer', () => {
+  const dictionary = createDictionary();
+  dictionary.add(obj1, 1);
+  dictionary.add(obj1Copy, 2);
+
+  expect(dictionary.count()).toBe(2);
+});

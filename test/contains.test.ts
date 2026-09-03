@@ -1,13 +1,13 @@
 import { describe } from 'vitest';
-import Enumerable from './sut.js';
-import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from './test-utils.js';
 import { createComparedDictionary, createDictionary, obj1, obj1Copy, obj2 } from './dictionary-fixture.js';
+import Enumerable from './sut.js';
+import { ok, test } from './test-utils.js';
 
 describe("Set", () => {
   test("contains", function () {
-      const numbers = Enumerable.range(1, 10);
-      ok(numbers.contains(5));
-      ok(!numbers.contains(13));
+    const numbers = Enumerable.range(1, 10);
+    ok(numbers.contains(5));
+    ok(!numbers.contains(13));
   });
 });
 
@@ -35,4 +35,10 @@ describe('Dictionary', () => {
     ok(comparedDictionary.contains(obj1Copy));
     ok(!comparedDictionary.contains({ a: 3 }));
   });
+});
+test('contains uses a comparison selector for structural keys', () => {
+  const values = Enumerable.from([{ id: 1 }, { id: 2 }]);
+
+  expect(values.contains({ id: 2 }, value => value.id)).toBe(true);
+  expect(values.contains({ id: 3 }, value => value.id)).toBe(false);
 });

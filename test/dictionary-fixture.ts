@@ -14,12 +14,12 @@ const obj2 = { a: 2 };
 const obj2Copy = { a: 2 };
 
 function createDictionary(): Dictionary {
-  return Enumerable.empty<{ key: string | ObjectKey; value: number }>()
+  return Enumerable.empty<{ key: string | ObjectKey; value: number; }>()
     .toDictionary((entry) => entry.key, (entry) => entry.value);
 }
 
 function createComparedDictionary(): ComparedDictionary {
-  return Enumerable.empty<{ key: ObjectKey; value: number }>()
+  return Enumerable.empty<{ key: ObjectKey; value: number; }>()
     .toDictionary((entry) => entry.key, (entry) => entry.value, aComparer);
 }
 

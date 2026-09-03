@@ -31,3 +31,21 @@ describe('Dictionary', () => {
     equal(comparedDictionary.count(), 1);
   });
 });
+test('remove does nothing when the key is absent', () => {
+  const dictionary = createDictionary();
+  dictionary.add('a', 1);
+
+  dictionary.remove('missing');
+
+  expect(dictionary.count()).toBe(1);
+  expect(dictionary.get('a')).toBe(1);
+});
+
+test('remove deletes an entry through its normalized comparison key', () => {
+  const dictionary = createComparedDictionary();
+  dictionary.add(obj1, 1);
+
+  dictionary.remove(obj1Copy);
+
+  expect(dictionary.contains(obj1)).toBe(false);
+});

@@ -35,3 +35,18 @@ describe('Dictionary', () => {
     equal(comparedDictionary.get(obj2Copy), 40000);
   });
 });
+test('set reports whether it replaced an existing key', () => {
+  const dictionary = createDictionary();
+
+  expect(dictionary.set('new', 1)).toBe(false);
+  expect(dictionary.set('new', 2)).toBe(true);
+  expect(dictionary.get('new')).toBe(2);
+});
+
+test('set replaces entries through normalized comparison keys', () => {
+  const dictionary = createComparedDictionary();
+
+  expect(dictionary.set(obj1, 1)).toBe(false);
+  expect(dictionary.set(obj1Copy, 2)).toBe(true);
+  expect(dictionary.count()).toBe(1);
+});
