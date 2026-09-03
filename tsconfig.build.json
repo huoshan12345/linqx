@@ -5,12 +5,11 @@
     "declaration": true,
     "emitDeclarationOnly": true,
     "outDir": "dist",
-    "rootDir": ".",
+    "rootDir": "src",
     "verbatimModuleSyntax": false
   },
   "include": [
-    "index.ts",
-    "linqx.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "dist",

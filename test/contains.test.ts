@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../index.js';
+import Enumerable from './sut.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from './test-utils.js';
 import { createComparedDictionary, createDictionary, obj1, obj1Copy, obj2 } from './dictionary-fixture.js';
 

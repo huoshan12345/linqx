@@ -19,9 +19,8 @@
     ]
   },
   "include": [
-    "index.ts",
-    "linqx.ts",
-    "test/*.ts",
+    "src/**/*.ts",
+    "test/**/*.ts",
     "vite.config.ts",
     "vitest.config.ts"
   ],

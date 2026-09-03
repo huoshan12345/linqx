@@ -4,7 +4,7 @@ Modern fork of the original [linq](https://github.com/mihaifm/linq) for JavaScri
 
 linqx keeps the familiar LINQ-style API while adding modern exports, new utility methods, improved TypeScript support, and active maintenance.
 
-Written in pure JavaScript with no runtime dependencies.
+Written in TypeScript with no runtime dependencies.
 
 ---
 
@@ -146,6 +146,16 @@ Most projects can switch directly:
 ```diff
 -import Enumerable from "linq";
 +import Enumerable from "linqx";
+```
+
+String Lambda expressions from the original `linq` package are intentionally not supported. Pass JavaScript functions instead:
+
+```ts
+// supported
+Enumerable.from([1, 2, 3, 4]).where(value => value % 2 === 0);
+
+// not supported
+Enumerable.from([1, 2, 3, 4]).where("value => value % 2 === 0");
 ```
 
 ---

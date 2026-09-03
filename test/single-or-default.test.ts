@@ -1,5 +1,5 @@
 import { describe } from 'vitest';
-import Enumerable from '../index.js';
+import Enumerable from './sut.js';
 import { deepEqual, equal, notDeepEqual, notEqual, ok, strictEqual, strictNotEqual, test } from './test-utils.js';
 
 describe("Paging", () => {
@@ -11,7 +11,7 @@ describe("Paging", () => {
   
       strictEqual(Enumerable.range(1, 1).singleOrDefault(), 1);
       strictEqual(Enumerable.range(1, 10).singleOrDefault((i) => i*3==6), 2);
-      strictEqual(Enumerable.range(1, 10).singleOrDefault((i) => i>13), null);
-      strictEqual(Enumerable.empty().singleOrDefault(), null);
+      strictEqual(Enumerable.range(1, 10).singleOrDefault((i) => i>13), undefined);
+      strictEqual(Enumerable.empty().singleOrDefault(), undefined);
   });
 });

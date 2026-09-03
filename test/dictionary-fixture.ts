@@ -1,4 +1,4 @@
-import Enumerable from '../index.js';
+import Enumerable from './sut.js';
 
 interface ObjectKey {
   a: number;

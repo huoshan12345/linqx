@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import Enumerable from "../index.js";
+import Enumerable from "./sut.js";
 
 describe("toMap", () => {
   it("creates map", () => {
