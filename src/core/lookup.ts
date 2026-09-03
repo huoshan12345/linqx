@@ -16,8 +16,12 @@ export class Lookup<TKey, TElement> implements ILookup<TKey, TElement> {
   add(key: TKey, element: TElement): void {
     const comparisonKey = this.compareSelector(key);
     const entry = this.entries.get(comparisonKey);
-    if (entry) entry.elements.push(element);
-    else this.entries.set(comparisonKey, { key, elements: [element] });
+
+    if (entry) {
+      entry.elements.push(element);
+    } else {
+      this.entries.set(comparisonKey, { key, elements: [element] });
+    }
   }
 
   count(): number {
@@ -36,7 +40,9 @@ export class Lookup<TKey, TElement> implements ILookup<TKey, TElement> {
   toEnumerable(): IEnumerable<Grouping<TKey, TElement>> {
     const entries = this.entries;
     return fromGenerator(function* () {
-      for (const entry of entries.values()) yield new Grouping(entry.key, entry.elements);
+      for (const entry of entries.values()) {
+        yield new Grouping(entry.key, entry.elements);
+      }
     });
   }
 }

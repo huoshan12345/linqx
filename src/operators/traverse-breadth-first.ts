@@ -4,7 +4,9 @@ import { fromGenerator } from '../internal/create-enumerable.js';
 export function traverseBreadthFirst<T, TResult = T>(
   this: IEnumerable<T>,
   childrenSelector: (element: T) => IEnumerable<T>,
-  resultSelector: (element: T, nestLevel: number) => TResult = (element => element as unknown as TResult),
+  resultSelector: (element: T, nestLevel: number) => TResult = (
+    element => element as unknown as TResult
+  ),
 ): IEnumerable<TResult> {
   const source = this;
   return fromGenerator(function* () {
@@ -18,7 +20,10 @@ export function traverseBreadthFirst<T, TResult = T>(
         yield resultSelector(element, level);
         next.push(...childrenSelector(element));
       }
-      if (!found) return;
+      if (!found) {
+        return;
+      }
+
       current = next;
       level++;
     }

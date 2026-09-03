@@ -43,10 +43,18 @@ export class Dictionary<TKey, TValue> implements IDictionary<TKey, TValue> {
     return this.entries.size;
   }
 
-  toEnumerable(): IEnumerable<{ key: TKey; value: TValue }> {
+  toEnumerable(): IEnumerable<{
+    key: TKey;
+    value: TValue;
+  }> {
     const entries = this.entries;
     return fromGenerator(function* () {
-      for (const entry of entries.values()) yield { key: entry.key, value: entry.value };
+      for (const entry of entries.values()) {
+        yield {
+          key: entry.key,
+          value: entry.value,
+        };
+      }
     });
   }
 }

@@ -1,10 +1,18 @@
 import type { IEnumerable } from '../types.js';
 import { fromGenerator } from '../internal/create-enumerable.js';
 
-export function where<T>(this: IEnumerable<T>, predicate: (element: T, index: number) => boolean): IEnumerable<T> {
+export function where<T>(
+  this: IEnumerable<T>,
+  predicate: (element: T, index: number) => boolean,
+): IEnumerable<T> {
   const source = this;
   return fromGenerator(function* () {
     let index = 0;
-    for (const element of source) if (predicate(element, index++)) yield element;
+
+    for (const element of source) {
+      if (predicate(element, index++)) {
+        yield element;
+      }
+    }
   });
 }

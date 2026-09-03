@@ -6,8 +6,14 @@ export class SharedEnumerable<T> extends EnumerableSequence<T> {
   private disposed = false;
 
   constructor(source: Iterable<T>) {
-    const state: { next: () => IteratorResult<T> } = { next: () => ({ done: true, value: undefined }) };
-    super(() => ({ next: () => state.next() }));
+    const state: { next: () => IteratorResult<T> } = {
+      next: () => ({ done: true, value: undefined }),
+    };
+
+    super(() => ({
+      next: () => state.next(),
+    }));
+
     this.sourceIterator = source[Symbol.iterator]();
     state.next = () => this.disposed
       ? { done: true, value: undefined }
@@ -15,7 +21,10 @@ export class SharedEnumerable<T> extends EnumerableSequence<T> {
   }
 
   dispose(): void {
-    if (this.disposed) return;
+    if (this.disposed) {
+      return;
+    }
+
     this.disposed = true;
     this.sourceIterator.return?.();
   }

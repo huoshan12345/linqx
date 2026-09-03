@@ -4,8 +4,10 @@ import { identity } from '../internal/functions.js';
 import { toIterable } from '../internal/to-iterable.js';
 
 export function join<TOuter, TInner, TKey, TResult>(
-  this: IEnumerable<TOuter>, inner: EnumerableInput<TInner>,
-  outerKeySelector: (outer: TOuter) => TKey, innerKeySelector: (inner: TInner) => TKey,
+  this: IEnumerable<TOuter>,
+  inner: EnumerableInput<TInner>,
+  outerKeySelector: (outer: TOuter) => TKey,
+  innerKeySelector: (inner: TInner) => TKey,
   resultSelector: (outer: TOuter, inner: TInner) => TResult,
   compareSelector: (key: TKey) => unknown = identity,
 ): IEnumerable<TResult> {
@@ -15,10 +17,19 @@ export function join<TOuter, TInner, TKey, TResult>(
     for (const item of toIterable(inner)) {
       const key = compareSelector(innerKeySelector(item));
       const values = lookup.get(key);
-      if (values) values.push(item); else lookup.set(key, [item]);
+
+      if (values) {
+        values.push(item);
+      } else {
+        lookup.set(key, [item]);
+      }
     }
+
     for (const item of outer) {
-      for (const match of lookup.get(compareSelector(outerKeySelector(item))) ?? []) {
+      const key = compareSelector(outerKeySelector(item));
+      const matches = lookup.get(key) ?? [];
+
+      for (const match of matches) {
         yield resultSelector(item, match);
       }
     }

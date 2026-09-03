@@ -1,7 +1,7 @@
-import type { IEnumerable } from '../types.js';
+import type { IEnumerable, IGrouping } from '../types.js';
 import { identity } from '../internal/functions.js';
 
-export function groupBy<T, TKey, TElement = T, TResult = import('../types.js').IGrouping<TKey, TElement>>(
+export function groupBy<T, TKey, TElement = T, TResult = IGrouping<TKey, TElement>>(
   this: IEnumerable<T>,
   keySelector: (element: T) => TKey,
   elementSelector: (element: T) => TElement = identity as (element: T) => TElement,

@@ -11,10 +11,17 @@ export class Enumerator<T> implements IEnumerator<T> {
   }
 
   moveNext(): boolean {
-    if (this.done) return false;
+    if (this.done) {
+      return false;
+    }
+
     const result = this.iterator.next();
     this.done = Boolean(result.done);
-    if (!this.done) this.value = result.value;
+
+    if (!this.done) {
+      this.value = result.value;
+    }
+
     return !this.done;
   }
 

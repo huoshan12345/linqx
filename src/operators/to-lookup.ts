@@ -9,6 +9,9 @@ export function toLookup<T, TKey, TElement = T>(
   compareSelector: (key: TKey) => unknown = identity,
 ): ILookup<TKey, TElement> {
   const lookup = new Lookup<TKey, TElement>(compareSelector);
-  for (const element of this) lookup.add(keySelector(element), elementSelector(element));
+  for (const element of this) {
+    lookup.add(keySelector(element), elementSelector(element));
+  }
+
   return lookup;
 }

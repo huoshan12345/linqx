@@ -12,26 +12,38 @@ export class MemoizedEnumerable<T> extends EnumerableSequence<T> {
     };
     super(() => {
       let index = 0;
-      return { next: () => state.iterator(index++) };
+      return {
+        next: () => state.iterator(index++),
+      };
     });
     this.sourceIterator = source[Symbol.iterator]();
     state.iterator = index => this.nextAt(index);
   }
 
   private nextAt(index: number): IteratorResult<T> {
-    if (index < this.cache.length) return { done: false, value: this.cache[index]! };
-    if (this.completed) return { done: true, value: undefined };
+    if (index < this.cache.length) {
+      return { done: false, value: this.cache[index]! };
+    }
+
+    if (this.completed) {
+      return { done: true, value: undefined };
+    }
+
     const result = this.sourceIterator.next();
     if (result.done) {
       this.completed = true;
       return { done: true, value: undefined };
     }
+
     this.cache.push(result.value);
     return { done: false, value: result.value };
   }
 
   dispose(): void {
-    if (this.completed) return;
+    if (this.completed) {
+      return;
+    }
+
     this.completed = true;
     this.sourceIterator.return?.();
   }

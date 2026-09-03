@@ -5,6 +5,11 @@ export function skip<T>(this: IEnumerable<T>, count: number): IEnumerable<T> {
   const source = this;
   return fromGenerator(function* () {
     let index = 0;
-    for (const element of source) if (index++ >= count) yield element;
+
+    for (const element of source) {
+      if (index++ >= count) {
+        yield element;
+      }
+    }
   });
 }

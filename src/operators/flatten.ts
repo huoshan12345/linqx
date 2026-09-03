@@ -7,11 +7,15 @@ export function flatten<T>(this: IEnumerable<T>): IEnumerable<unknown> {
   return fromGenerator(function* flat() {
     function* visit(value: unknown): Generator<unknown> {
       if (typeof value !== 'string' && isIterable(value)) {
-        for (const child of value) yield* visit(child);
+        for (const child of value) {
+          yield* visit(child);
+        }
       } else {
         yield value;
       }
     }
-    for (const element of source) yield* visit(element);
+    for (const element of source) {
+      yield* visit(element);
+    }
   });
 }

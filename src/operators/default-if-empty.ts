@@ -9,6 +9,9 @@ export function defaultIfEmpty<T>(this: IEnumerable<T>, defaultValue?: T): IEnum
       empty = false;
       yield element;
     }
-    if (empty) yield defaultValue as T;
+
+    if (empty) {
+      yield defaultValue as T;
+    }
   });
 }

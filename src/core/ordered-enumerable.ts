@@ -17,8 +17,12 @@ export class OrderedEnumerable<T> extends EnumerableSequence<T> {
             criterion.keySelector(left.value),
             criterion.keySelector(right.value),
           );
-          if (comparison !== 0) return criterion.descending ? -comparison : comparison;
+
+          if (comparison !== 0) {
+            return criterion.descending ? -comparison : comparison;
+          }
         }
+
         return left.index - right.index;
       });
       return indexed.map(entry => entry.value)[Symbol.iterator]();

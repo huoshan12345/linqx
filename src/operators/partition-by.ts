@@ -1,9 +1,9 @@
-import type { IEnumerable } from '../types.js';
+import type { IEnumerable, IGrouping } from '../types.js';
 import { Grouping } from '../core/grouping.js';
 import { fromGenerator } from '../internal/create-enumerable.js';
 import { identity } from '../internal/functions.js';
 
-export function partitionBy<T, TKey, TElement = T, TResult = import('../types.js').IGrouping<TKey, TElement>>(
+export function partitionBy<T, TKey, TElement = T, TResult = IGrouping<TKey, TElement>>(
   this: IEnumerable<T>,
   keySelector: (element: T) => TKey,
   elementSelector: (element: T) => TElement = identity as (element: T) => TElement,
@@ -29,13 +29,18 @@ export function partitionBy<T, TKey, TElement = T, TResult = import('../types.js
         yield emit();
         elements = [];
       }
+
       if (!hasGroup || currentComparisonKey !== comparisonKey) {
         key = currentKey;
         comparisonKey = currentComparisonKey;
         hasGroup = true;
       }
+
       elements.push(elementSelector(element));
     }
-    if (hasGroup) yield emit();
+
+    if (hasGroup) {
+      yield emit();
+    }
   });
 }

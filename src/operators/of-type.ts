@@ -5,11 +5,21 @@ export function ofType<T, TResult>(this: IEnumerable<T>, type: unknown): IEnumer
   const source = this;
   return fromGenerator(function* () {
     for (const element of source) {
-      const matches = type === Number ? typeof element === 'number'
-        : type === String ? typeof element === 'string'
-        : type === Boolean ? typeof element === 'boolean'
-        : typeof type === 'function' && element instanceof type;
-      if (matches) yield element as unknown as TResult;
+      let matches: boolean;
+
+      if (type === Number) {
+        matches = typeof element === 'number';
+      } else if (type === String) {
+        matches = typeof element === 'string';
+      } else if (type === Boolean) {
+        matches = typeof element === 'boolean';
+      } else {
+        matches = typeof type === 'function' && element instanceof type;
+      }
+
+      if (matches) {
+        yield element as unknown as TResult;
+      }
     }
   });
 }
