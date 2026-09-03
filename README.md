@@ -111,6 +111,15 @@ import Enumerable from "linqx";
 
 const items: Enumerable.IEnumerable<number> = Enumerable.from([1, 2, 3]);
 ```
+
+## Tutorial
+
+Build the package and run the TypeScript tutorial:
+
+```bash
+pnpm tutorial
+```
+
 ---
 
 ## New API Examples
@@ -148,7 +157,7 @@ Most projects can switch directly:
 +import Enumerable from "linqx";
 ```
 
-String Lambda expressions from the original `linq` package are intentionally not supported. Pass JavaScript functions instead:
+The original string Lambda syntax is no longer supported. Pass JavaScript functions instead:
 
 ```ts
 // supported

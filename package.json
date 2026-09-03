@@ -21,6 +21,7 @@
     "type-check": "tsc --noEmit",
     "test": "run-s type-check && vitest run",
     "test:watch": "vitest",
+    "tutorial": "run-s build && node sample/tutorial.ts",
     "ncu": "npx npm-check-updates -u"
   },
   "preferGlobal": false,
