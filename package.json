@@ -19,9 +19,7 @@
     "build": "run-s clean && run-s build:ts && run-s build:dts && run-s copy",
     "build:ts": "run-s type-check && vite build",
     "build:dts": "tsc -p tsconfig.build.json",
-    "type-check": "run-p type-check:source type-check:test",
-    "type-check:source": "tsc --noEmit",
-    "type-check:test": "tsc -p tsconfig.test.json",
+    "type-check": "tsc --noEmit",
     "test": "run-s type-check && vitest run",
     "test:watch": "vitest",
     "ncu": "npx npm-check-updates -u"
