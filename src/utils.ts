@@ -222,3 +222,30 @@ export const Utils: EnumerableUtils = {
     typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol'
   ),
 };
+
+export function definePropertyIfAbsent<
+  T extends object,
+  K extends PropertyKey
+>(
+  target: T,
+  key: K,
+  value: unknown,
+  writable = true,
+  configurable = true,
+  enumerable = false
+): boolean {
+  if (target == null
+    || key == null
+    || Object.prototype.hasOwnProperty.call(target, key)) {
+    return false;
+  }
+
+  Object.defineProperty(target, key, {
+    value,
+    writable,
+    configurable,
+    enumerable
+  });
+
+  return true;
+}

@@ -11,7 +11,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "lib": [
-      "esnext"
+      "esnext",
+      "DOM",
+      "DOM.Iterable"
     ],
     "types": [
       "node",
