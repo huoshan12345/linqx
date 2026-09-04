@@ -28,6 +28,7 @@ import type {
   IOrderedEnumerable as OrderedEnumerableInterface,
   IPageInfo as PageInfo,
   Indexed as IndexedValue,
+  KeyValuePair as Pair,
   Neighbors as NeighborValues,
   Positioned as PositionedValue,
 } from './types.js';
@@ -116,6 +117,9 @@ export namespace Enumerable {
 
   /** A one-based page number and page size. */
   export type IPageInfo = PageInfo;
+
+  /** A key associated with one value. */
+  export type KeyValuePair<TKey, TValue> = Pair<TKey, TValue>;
 
   /** A sequence element paired with its zero-based index. */
   export type Indexed<T> = IndexedValue<T>;

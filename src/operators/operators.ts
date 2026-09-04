@@ -1,7 +1,9 @@
 import { aggregate } from './aggregate.js';
+import { aggregateBy } from './aggregate-by.js';
 import { all } from './all.js';
 import { alternate } from './alternate.js';
 import { any } from './any.js';
+import { append } from './append.js';
 import { asEnumerable } from './as-enumerable.js';
 import { average } from './average.js';
 import { buffer } from './buffer.js';
@@ -12,14 +14,17 @@ import { chunk } from './chunk.js';
 import { concat } from './concat.js';
 import { contains } from './contains.js';
 import { count } from './count.js';
+import { countBy } from './count-by.js';
 import { createOrderedEnumerable } from './create-ordered-enumerable.js';
 import { defaultIfEmpty } from './default-if-empty.js';
 import { distinct } from './distinct.js';
+import { distinctBy } from './distinct-by.js';
 import { distinctUntilChanged } from './distinct-until-changed.js';
 import { doAction } from './do-action.js';
 import { elementAt } from './element-at.js';
 import { elementAtOrDefault } from './element-at-or-default.js';
 import { except } from './except.js';
+import { exceptBy } from './except-by.js';
 import { finallyAction } from './finally-action.js';
 import { first } from './first.js';
 import { firstOrDefault } from './first-or-default.js';
@@ -32,6 +37,7 @@ import { index } from './index.js';
 import { indexOf } from './index-of.js';
 import { insert } from './insert.js';
 import { intersect } from './intersect.js';
+import { intersectBy } from './intersect-by.js';
 import { isEmpty } from './is-empty.js';
 import { join } from './join.js';
 import { joinWith } from './join-with.js';
@@ -55,7 +61,9 @@ import { page } from './page.js';
 import { pairwise } from './pairwise.js';
 import { partitionBy } from './partition-by.js';
 import { position } from './position.js';
+import { prepend } from './prepend.js';
 import { reverse } from './reverse.js';
+import { rightJoin } from './right-join.js';
 import { scan } from './scan.js';
 import { select } from './select.js';
 import { selectMany } from './select-many.js';
@@ -65,11 +73,13 @@ import { shuffle } from './shuffle.js';
 import { single } from './single.js';
 import { singleOrDefault } from './single-or-default.js';
 import { skip } from './skip.js';
+import { skipLast } from './skip-last.js';
 import { skipWhile } from './skip-while.js';
 import { sum } from './sum.js';
 import { take } from './take.js';
 import { takeExceptLast } from './take-except-last.js';
 import { takeFromLast } from './take-from-last.js';
+import { takeLast } from './take-last.js';
 import { takeWhile } from './take-while.js';
 import { thenBy } from './then-by.js';
 import { thenByDescending } from './then-by-descending.js';
@@ -80,10 +90,12 @@ import { toJSONString } from './to-json-string.js';
 import { toLookup } from './to-lookup.js';
 import { toMap } from './to-map.js';
 import { toObject } from './to-object.js';
+import { toSet } from './to-set.js';
 import { trace } from './trace.js';
 import { traverseBreadthFirst } from './traverse-breadth-first.js';
 import { traverseDepthFirst } from './traverse-depth-first.js';
 import { union } from './union.js';
+import { unionBy } from './union-by.js';
 import { weightedSample } from './weighted-sample.js';
 import { where } from './where.js';
 import { whereIf } from './where-if.js';
@@ -92,9 +104,11 @@ import { zip } from './zip.js';
 
 export const instanceOperators = {
   aggregate,
+  aggregateBy,
   all,
   alternate,
   any,
+  append,
   asEnumerable,
   average,
   buffer,
@@ -105,14 +119,17 @@ export const instanceOperators = {
   concat,
   contains,
   count,
+  countBy,
   createOrderedEnumerable,
   defaultIfEmpty,
   distinct,
+  distinctBy,
   distinctUntilChanged,
   doAction,
   elementAt,
   elementAtOrDefault,
   except,
+  exceptBy,
   finallyAction,
   first,
   firstOrDefault,
@@ -125,6 +142,7 @@ export const instanceOperators = {
   indexOf,
   insert,
   intersect,
+  intersectBy,
   isEmpty,
   join,
   joinWith,
@@ -148,7 +166,9 @@ export const instanceOperators = {
   pairwise,
   partitionBy,
   position,
+  prepend,
   reverse,
+  rightJoin,
   scan,
   select,
   selectMany,
@@ -158,11 +178,13 @@ export const instanceOperators = {
   single,
   singleOrDefault,
   skip,
+  skipLast,
   skipWhile,
   sum,
   take,
   takeExceptLast,
   takeFromLast,
+  takeLast,
   takeWhile,
   thenBy,
   thenByDescending,
@@ -173,10 +195,12 @@ export const instanceOperators = {
   toLookup,
   toMap,
   toObject,
+  toSet,
   trace,
   traverseBreadthFirst,
   traverseDepthFirst,
   union,
+  unionBy,
   weightedSample,
   where,
   whereIf,

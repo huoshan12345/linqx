@@ -1,4 +1,4 @@
-import type { IDictionary, IEnumerable } from '../types.js';
+import type { IDictionary, IEnumerable, KeyValuePair } from '../types.js';
 import { fromGenerator } from '../internal/create-enumerable.js';
 import { identity } from '../internal/functions.js';
 
@@ -43,10 +43,7 @@ export class Dictionary<TKey, TValue> implements IDictionary<TKey, TValue> {
     return this.entries.size;
   }
 
-  toEnumerable(): IEnumerable<{
-    key: TKey;
-    value: TValue;
-  }> {
+  toEnumerable(): IEnumerable<KeyValuePair<TKey, TValue>> {
     const entries = this.entries;
     return fromGenerator(function* () {
       for (const entry of entries.values()) {

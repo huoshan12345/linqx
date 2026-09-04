@@ -247,6 +247,25 @@ export interface IEnumerable<T> extends Iterable<T> {
   ): IEnumerable<TResult>;
 
   /**
+   * Correlates two sequences while retaining every element from the inner sequence.
+   *
+   * @param inner The sequence whose elements are always retained.
+   * @param outerKeySelector Selects a key from an outer element.
+   * @param innerKeySelector Selects a key from an inner element.
+   * @param resultSelector Creates a result from a matching pair. The outer value is `null` when
+   * no match exists.
+   * @param compareSelector Optionally normalizes keys before strict equality comparison.
+   * @returns A deferred right outer join in inner-sequence order.
+   */
+  rightJoin<TInner, TKey, TResult>(
+    inner: EnumerableInput<TInner>,
+    outerKeySelector: (outer: T) => TKey,
+    innerKeySelector: (inner: TInner) => TKey,
+    resultSelector: (outer: T | null, inner: TInner) => TResult,
+    compareSelector?: (obj: TKey) => unknown,
+  ): IEnumerable<TResult>;
+
+  /**
    * Correlates each outer element with all inner elements having an equal comparison key.
    *
    * @param inner The inner sequence.
@@ -292,6 +311,22 @@ export interface IEnumerable<T> extends Iterable<T> {
   concat(...sequences: EnumerableInput<T>[]): IEnumerable<T>;
 
   /**
+   * Returns the source followed by one additional element.
+   *
+   * @param element The element placed after the source.
+   * @returns A deferred sequence ending with `element`.
+   */
+  append(element: T): IEnumerable<T>;
+
+  /**
+   * Returns one additional element followed by the source.
+   *
+   * @param element The element placed before the source.
+   * @returns A deferred sequence beginning with `element`.
+   */
+  prepend(element: T): IEnumerable<T>;
+
+  /**
    * Inserts a sequence before the element at a zero-based index.
    *
    * @param index The insertion index. Values outside the source range append the sequence.
@@ -334,6 +369,18 @@ export interface IEnumerable<T> extends Iterable<T> {
   distinct<TCompare>(compareSelector?: (element: T) => TCompare): IEnumerable<T>;
 
   /**
+   * Returns the first element associated with each distinct selected key.
+   *
+   * @param keySelector Selects a key from each element.
+   * @param compareSelector Optionally normalizes keys before `Set` equality comparison.
+   * @returns A deferred sequence preserving first-occurrence order.
+   */
+  distinctBy<TKey, TCompare = TKey>(
+    keySelector: (element: T) => TKey,
+    compareSelector?: (key: TKey) => TCompare,
+  ): IEnumerable<T>;
+
+  /**
    * Removes consecutive elements with duplicate comparison keys.
    *
    * @param compareSelector Optionally selects a key compared with strict equality.
@@ -354,6 +401,20 @@ export interface IEnumerable<T> extends Iterable<T> {
   ): IEnumerable<T>;
 
   /**
+   * Returns distinct source elements whose selected keys are absent from a key sequence.
+   *
+   * @param second The keys to exclude.
+   * @param keySelector Selects a key from each source element.
+   * @param compareSelector Optionally normalizes keys before `Set` equality comparison.
+   * @returns A deferred set-difference sequence in source order.
+   */
+  exceptBy<TKey, TCompare = TKey>(
+    second: EnumerableInput<TKey>,
+    keySelector: (element: T) => TKey,
+    compareSelector?: (key: TKey) => TCompare,
+  ): IEnumerable<T>;
+
+  /**
    * Produces the distinct elements whose comparison keys occur in both sequences.
    *
    * @param second The sequence to intersect with this sequence.
@@ -366,6 +427,20 @@ export interface IEnumerable<T> extends Iterable<T> {
   ): IEnumerable<T>;
 
   /**
+   * Returns distinct source elements whose selected keys occur in a key sequence.
+   *
+   * @param second The keys to retain.
+   * @param keySelector Selects a key from each source element.
+   * @param compareSelector Optionally normalizes keys before `Set` equality comparison.
+   * @returns A deferred intersection sequence in source order.
+   */
+  intersectBy<TKey, TCompare = TKey>(
+    second: EnumerableInput<TKey>,
+    keySelector: (element: T) => TKey,
+    compareSelector?: (key: TKey) => TCompare,
+  ): IEnumerable<T>;
+
+  /**
    * Produces the distinct elements from this sequence followed by another sequence.
    *
    * @param second The second sequence.
@@ -375,6 +450,20 @@ export interface IEnumerable<T> extends Iterable<T> {
   union<TCompare>(
     second: EnumerableInput<T>,
     compareSelector?: (element: T) => TCompare,
+  ): IEnumerable<T>;
+
+  /**
+   * Returns the first element associated with each distinct selected key across two sequences.
+   *
+   * @param second The sequence appended before duplicate removal.
+   * @param keySelector Selects a key from each element.
+   * @param compareSelector Optionally normalizes keys before `Set` equality comparison.
+   * @returns A deferred union preserving first-occurrence order.
+   */
+  unionBy<TKey, TCompare = TKey>(
+    second: EnumerableInput<T>,
+    keySelector: (element: T) => TKey,
+    compareSelector?: (key: TKey) => TCompare,
   ): IEnumerable<T>;
 
   /**
@@ -572,6 +661,22 @@ export interface IEnumerable<T> extends Iterable<T> {
   ): TResult;
 
   /**
+   * Aggregates elements independently for each selected key.
+   *
+   * @param keySelector Selects a key from each element.
+   * @param seed The initial accumulator value used for every key.
+   * @param accumulator Updates a key's accumulator with one source element.
+   * @param compareSelector Optionally normalizes keys before `Map` equality comparison.
+   * @returns A deferred sequence of key and aggregate pairs in first-key order.
+   */
+  aggregateBy<TKey, TAccumulate>(
+    keySelector: (element: T) => TKey,
+    seed: TAccumulate,
+    accumulator: (accumulate: TAccumulate, element: T) => TAccumulate,
+    compareSelector?: (key: TKey) => unknown,
+  ): IEnumerable<KeyValuePair<TKey, TAccumulate>>;
+
+  /**
    * Computes the arithmetic mean of selected numeric values.
    *
    * @param selector Optionally converts each element to a number.
@@ -586,6 +691,18 @@ export interface IEnumerable<T> extends Iterable<T> {
    * @returns The number of matching elements.
    */
   count(predicate?: (element: T, index: number) => boolean): number;
+
+  /**
+   * Counts elements independently for each selected key.
+   *
+   * @param keySelector Selects a key from each element.
+   * @param compareSelector Optionally normalizes keys before `Map` equality comparison.
+   * @returns A deferred sequence of key and count pairs in first-key order.
+   */
+  countBy<TKey>(
+    keySelector: (element: T) => TKey,
+    compareSelector?: (key: TKey) => unknown,
+  ): IEnumerable<KeyValuePair<TKey, number>>;
 
   /**
    * Finds the greatest selected numeric value.
@@ -866,12 +983,28 @@ export interface IEnumerable<T> extends Iterable<T> {
   takeExceptLast(count?: number): IEnumerable<T>;
 
   /**
+   * Returns every element except a number of trailing elements.
+   *
+   * @param count The number of trailing elements to omit.
+   * @returns A deferred sequence without the requested suffix.
+   */
+  skipLast(count: number): IEnumerable<T>;
+
+  /**
    * Returns up to a specified number of trailing elements.
    *
    * @param count The suffix length; non-positive values return an empty sequence.
    * @returns A deferred sequence that buffers the source before producing the suffix.
    */
   takeFromLast(count: number): IEnumerable<T>;
+
+  /**
+   * Returns up to a specified number of trailing elements.
+   *
+   * @param count The suffix length; non-positive values return an empty sequence.
+   * @returns A deferred sequence that buffers the source before producing the suffix.
+   */
+  takeLast(count: number): IEnumerable<T>;
 
   /**
    * Selects a one-based page.
@@ -934,6 +1067,13 @@ export interface IEnumerable<T> extends Iterable<T> {
 
   /** @returns A newly allocated array containing all source elements. */
   toArray(): T[];
+
+  /**
+   * Materializes the sequence into a native `Set`.
+   *
+   * @returns A set containing each distinct value in first-occurrence order.
+   */
+  toSet(): Set<T>;
 
   /**
    * Creates a lookup by grouping source elements under selected keys.
@@ -1196,6 +1336,15 @@ export interface IDisposableEnumerable<T> extends IEnumerable<T> {
   dispose(): void;
 }
 
+/** Associates a key with one value. */
+export interface KeyValuePair<TKey, TValue> {
+  /** The entry's original key. */
+  key: TKey;
+
+  /** The entry's value. */
+  value: TValue;
+}
+
 /** A mutable key-value collection with optional normalized-key comparison. */
 export interface IDictionary<TKey, TValue> {
   /**
@@ -1245,12 +1394,7 @@ export interface IDictionary<TKey, TValue> {
   count(): number;
 
   /** @returns A deferred sequence of entries in insertion order. */
-  toEnumerable(): IEnumerable<{
-    /** The entry's original key. */
-    key: TKey;
-    /** The entry's value. */
-    value: TValue;
-  }>;
+  toEnumerable(): IEnumerable<KeyValuePair<TKey, TValue>>;
 }
 
 /** A read-only one-to-many mapping produced by grouping operations. */
