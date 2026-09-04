@@ -1,5 +1,5 @@
-import { describe, it, expect } from "vitest";
-import Enumerable from "../index.js";
+import { describe, expect, it } from "vitest";
+import Enumerable from "./sut.js";
 
 describe("chunk", () => {
   it("chunks normally", () => {
