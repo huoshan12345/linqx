@@ -3,7 +3,7 @@
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
   "type": "module",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "license": "MIT",
   "homepage": "https://github.com/huoshan12345/linqx",
   "repository": {
@@ -22,7 +22,8 @@
     "test": "run-s type-check && vitest run",
     "test:watch": "vitest",
     "tutorial": "run-s build && node sample/tutorial.ts",
-    "ncu": "npx npm-check-updates -u"
+    "ncu": "npx npm-check-updates -u",
+    "p": "run-s build && pnpm pack"
   },
   "preferGlobal": false,
   "keywords": [

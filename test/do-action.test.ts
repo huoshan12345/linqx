@@ -29,3 +29,23 @@ test('doAction remains lazy until the sequence is consumed', () => {
 test('doAction stops before yielding the element whose action returns false', () => {
   expect(Enumerable.range(1, 5).doAction(value => value < 3).toArray()).toEqual([1, 2]);
 });
+
+test('doAction accepts an expression-bodied callback returning a non-boolean value', () => {
+  let cssCalls = 0;
+  const fluentValue = {
+    inlineBlock() {
+      return this;
+    },
+    css(_property: string, _value: string) {
+      cssCalls++;
+      return this;
+    },
+  };
+
+  const result = Enumerable.make(fluentValue)
+    .doAction(value => value.inlineBlock().css('padding', '0 2px'))
+    .toArray();
+
+  expect(result).toEqual([fluentValue]);
+  expect(cssCalls).toBe(1);
+});

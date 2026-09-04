@@ -2,7 +2,15 @@ import type { IEnumerable } from '../types.js';
 
 export function forEach<T>(
   this: IEnumerable<T>,
-  action: (element: T, index: number) => void | boolean,
+  action: (element: T, index: number) => void,
+): void;
+export function forEach<T>(
+  this: IEnumerable<T>,
+  action: (element: T, index: number) => boolean,
+): void;
+export function forEach<T>(
+  this: IEnumerable<T>,
+  action: (element: T, index: number) => unknown,
 ): void {
   let index = 0;
 

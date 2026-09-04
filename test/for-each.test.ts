@@ -37,3 +37,21 @@ test('forEach propagates errors from the action', () => {
     throw new Error('action failed');
   })).toThrow('action failed');
 });
+
+test('forEach accepts an expression-bodied callback returning a non-boolean value', () => {
+  let cssCalls = 0;
+  const fluentValue = {
+    inlineBlock() {
+      return this;
+    },
+    css(_property: string, _value: string) {
+      cssCalls++;
+      return this;
+    },
+  };
+
+  Enumerable.make(fluentValue)
+    .forEach(value => value.inlineBlock().css('padding', '0 2px'));
+
+  expect(cssCalls).toBe(1);
+});

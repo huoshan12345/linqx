@@ -1072,14 +1072,16 @@ export interface IEnumerable<T> extends Iterable<T> {
    * @param action Receives each element and index. Returning `false` stops the sequence.
    * @returns A deferred sequence that invokes `action` during enumeration.
    */
-  doAction(action: (element: T, index: number) => void | boolean): IEnumerable<T>;
+  doAction(action: (element: T, index: number) => void): IEnumerable<T>;
+  doAction(action: (element: T, index: number) => boolean): IEnumerable<T>;
 
   /**
    * Eagerly enumerates the sequence and performs an action for each element.
    *
    * @param action Receives each element and index. Returning `false` stops enumeration.
    */
-  forEach(action: (element: T, index: number) => void | boolean): void;
+  forEach(action: (element: T, index: number) => void): void;
+  forEach(action: (element: T, index: number) => boolean): void;
 
   /**
    * Eagerly consumes the entire sequence without retaining its elements.
