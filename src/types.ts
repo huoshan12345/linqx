@@ -1058,13 +1058,13 @@ export interface IEnumerable<T> extends Iterable<T> {
   chunk(size: number): IEnumerable<T[]>;
 
   /** @returns A deferred sequence pairing every element with its zero-based index. */
-  index(): IEnumerable<IndexedItem<T>>;
+  index(): IEnumerable<Indexed<T>>;
 
   /** @returns A deferred sequence describing each element's index and boundary position. */
-  position(): IEnumerable<PositionedItem<T>>;
+  position(): IEnumerable<Positioned<T>>;
 
   /** @returns A deferred sequence pairing each element with its previous and next neighbors. */
-  withNeighbors(): IEnumerable<ItemWithNeighbors<T>>;
+  withNeighbors(): IEnumerable<Neighbors<T>>;
 
   /**
    * Performs an action as elements are enumerated and passes the elements through unchanged.
@@ -1301,7 +1301,7 @@ export interface IPageInfo {
 }
 
 /** Associates a sequence element with its zero-based index. */
-export interface IndexedItem<T> {
+export interface Indexed<T> {
   /** The element's zero-based index. */
   index: number;
 
@@ -1310,7 +1310,7 @@ export interface IndexedItem<T> {
 }
 
 /** Describes an element's index and position within a sequence. */
-export interface PositionedItem<T> extends IndexedItem<T> {
+export interface Positioned<T> extends Indexed<T> {
   /** Whether this is the first element. */
   isFirst: boolean;
 
@@ -1319,7 +1319,7 @@ export interface PositionedItem<T> extends IndexedItem<T> {
 }
 
 /** Associates an element with its immediate neighbors. */
-export interface ItemWithNeighbors<T> {
+export interface Neighbors<T> {
   /** The previous element, or `null` for the first element. */
   prev: T | null;
 
@@ -1329,6 +1329,15 @@ export interface ItemWithNeighbors<T> {
   /** The next element, or `null` for the last element. */
   next: T | null;
 }
+
+/** @deprecated Use {@link Indexed} instead. */
+export type IndexedItem<T> = Indexed<T>;
+
+/** @deprecated Use {@link Positioned} instead. */
+export type PositionedItem<T> = Positioned<T>;
+
+/** @deprecated Use {@link Neighbors} instead. */
+export type ItemWithNeighbors<T> = Neighbors<T>;
 
 /** Compares two values, returning a negative, zero, or positive number. */
 export type Comparer<T> = (first: T, second: T) => number;

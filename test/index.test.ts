@@ -3,8 +3,11 @@ import Enumerable from "./sut.js";
 
 describe("index", () => {
   it("adds index", () => {
+    const indexed: Enumerable.Indexed<string>[] =
+      Enumerable.from(["a", "b"]).index().toArray();
+
     expect(
-      Enumerable.from(["a", "b"]).index().toArray()
+      indexed
     ).toEqual([
       { index: 0, item: "a" },
       { index: 1, item: "b" }

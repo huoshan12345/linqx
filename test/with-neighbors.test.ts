@@ -3,8 +3,11 @@ import Enumerable from "./sut.js";
 
 describe("withNeighbors", () => {
   it("adds neighbors", () => {
+    const neighbors: Enumerable.Neighbors<number>[] =
+      Enumerable.from([10, 20, 30]).withNeighbors().toArray();
+
     expect(
-      Enumerable.from([10, 20, 30]).withNeighbors().toArray()
+      neighbors
     ).toEqual([
       { prev: null, item: 10, next: 20 },
       { prev: 10, item: 20, next: 30 },

@@ -1,7 +1,7 @@
-import type { IEnumerable, PositionedItem } from '../types.js';
+import type { IEnumerable, Positioned } from '../types.js';
 import { fromGenerator } from '../internal/create-enumerable.js';
 
-export function position<T>(this: IEnumerable<T>): IEnumerable<PositionedItem<T>> {
+export function position<T>(this: IEnumerable<T>): IEnumerable<Positioned<T>> {
   const source = this;
   return fromGenerator(function* () {
     const iterator = source[Symbol.iterator]();

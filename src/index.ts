@@ -27,9 +27,9 @@ import type {
   ILookup as LookupInterface,
   IOrderedEnumerable as OrderedEnumerableInterface,
   IPageInfo as PageInfo,
-  IndexedItem as Indexed,
-  ItemWithNeighbors as Neighbors,
-  PositionedItem as Positioned,
+  Indexed as IndexedValue,
+  Neighbors as NeighborValues,
+  Positioned as PositionedValue,
 } from './types.js';
 
 Object.assign(EnumerableSequence.prototype, instanceOperators);
@@ -118,12 +118,21 @@ export namespace Enumerable {
   export type IPageInfo = PageInfo;
 
   /** A sequence element paired with its zero-based index. */
-  export type IndexedItem<T> = Indexed<T>;
+  export type Indexed<T> = IndexedValue<T>;
 
   /** A sequence element annotated with index and boundary information. */
-  export type PositionedItem<T> = Positioned<T>;
+  export type Positioned<T> = PositionedValue<T>;
 
   /** A sequence element paired with its immediate neighbors. */
+  export type Neighbors<T> = NeighborValues<T>;
+
+  /** @deprecated Use {@link Indexed} instead. */
+  export type IndexedItem<T> = Indexed<T>;
+
+  /** @deprecated Use {@link Positioned} instead. */
+  export type PositionedItem<T> = Positioned<T>;
+
+  /** @deprecated Use {@link Neighbors} instead. */
   export type ItemWithNeighbors<T> = Neighbors<T>;
 }
 

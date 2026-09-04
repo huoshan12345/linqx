@@ -3,8 +3,11 @@ import Enumerable from "./sut.js";
 
 describe("position", () => {
   it("adds flags", () => {
+    const positioned: Enumerable.Positioned<string>[] =
+      Enumerable.from(["a", "b", "c"]).position().toArray();
+
     expect(
-      Enumerable.from(["a", "b", "c"]).position().toArray()
+      positioned
     ).toEqual([
       { index: 0, item: "a", isFirst: true, isLast: false },
       { index: 1, item: "b", isFirst: false, isLast: false },

@@ -1,7 +1,7 @@
-import type { IEnumerable, ItemWithNeighbors } from '../types.js';
+import type { IEnumerable, Neighbors } from '../types.js';
 import { fromGenerator } from '../internal/create-enumerable.js';
 
-export function withNeighbors<T>(this: IEnumerable<T>): IEnumerable<ItemWithNeighbors<T>> {
+export function withNeighbors<T>(this: IEnumerable<T>): IEnumerable<Neighbors<T>> {
   const source = this;
   return fromGenerator(function* () {
     const iterator = source[Symbol.iterator]();
