@@ -3,7 +3,7 @@
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
   "type": "module",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "homepage": "https://github.com/huoshan12345/linqx",
   "repository": {
@@ -15,13 +15,14 @@
     "postpack": "pinst --enable",
     "preinstall": "npx only-allow pnpm",
     "clean": "shx rm -rf dist/** && shx rm -f *.tgz",
+    "dev": "run-s type-check:watch",
     "build": "run-s clean && run-s build:ts && run-s build:dts",
     "build:ts": "run-s type-check && vite build",
-    "build:dts": "tsc -p tsconfig.build.json",
-    "type-check": "tsc --noEmit",
-    "test": "run-s type-check && vitest run",
+    "build:dts": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "test": "vitest run",
     "test:watch": "vitest",
-    "tutorial": "run-s build && node sample/tutorial.ts",
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "tsc --noEmit --watch",
     "ncu": "npx npm-check-updates -u",
     "p": "run-s build && pnpm pack"
   },
@@ -52,8 +53,9 @@
     "jsdom": "^30.0.1",
     "npm-run-all2": "^9.0.3",
     "shx": "^0.4.0",
+    "tsc-alias": "^1.9.4",
     "typescript": "^7.0.2",
     "vite": "^8.2.2",
-    "vitest": "^5.0.0"
+    "vitest": "^4.1.11"
   }
 }

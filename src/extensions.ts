@@ -1,5 +1,5 @@
-import { Enumerable } from '.';
-import { definePropertyIfAbsent } from './utils';
+import { Enumerable } from './index.js';
+import { definePropertyIfAbsent } from './utils.js';
 
 declare global {
   interface Map<K, V> {
