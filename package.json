@@ -2,8 +2,7 @@
   "name": "linqx",
   "author": "huoshan12345",
   "description": "Modern fork of linq with more APIs",
-  "type": "module",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "license": "MIT",
   "homepage": "https://github.com/huoshan12345/linqx",
   "repository": {
@@ -26,22 +25,25 @@
     "ncu": "npx npm-check-updates -u",
     "p": "run-s build && pnpm pack"
   },
-  "preferGlobal": false,
   "keywords": [
     "linq",
     "linqx",
     "linqjs",
     "linqts"
   ],
-  "engines": {
-    "node": "*"
-  },
+  "type": "module",
   "main": "dist/index.js",
-  "exports": {
-    ".": "./dist/index.js",
-    "./extensions": "./dist/extensions.js"
-  },
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./extensions": {
+      "types": "./dist/extensions.d.ts",
+      "default": "./dist/extensions.js"
+    }
+  },
   "files": [
     "dist",
     "README.md",
