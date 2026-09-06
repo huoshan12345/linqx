@@ -1,4 +1,4 @@
-# linqx
+# linqx [![NPM Version](https://img.shields.io/npm/v/linqx)](https://www.npmjs.com/package/linqx) [![LICENSE](https://img.shields.io/github/license/mashape/apistatus.svg)](LICENSE.TXT) [![Build](https://github.com/huoshan12345/linqx/actions/workflows/build.yml/badge.svg)](https://github.com/huoshan12345/linqx/actions/workflows/build.yml)
 
 Modern fork of the original [linq](https://github.com/mihaifm/linq) for JavaScript.
 
