@@ -124,6 +124,70 @@ import Enumerable from "linqx";
 const items: Enumerable.IEnumerable<number> = Enumerable.from([1, 2, 3]);
 ```
 
+## Repeated Enumeration
+
+You can enumerate an `IEnumerable<T>` again only if its source supports it. With arrays,
+maps, and sets, each enumeration starts a new iterator. This also applies to the
+`asEnumerable()` extensions for arrays, maps, and DOM collections.
+
+A generator object or an existing iterator has a consumption position. Wrapping it with
+`Enumerable.from()` does not reset that position:
+
+```ts
+import Enumerable from "linqx";
+
+function* numbers() {
+  yield 1;
+  yield 2;
+  yield 3;
+}
+
+const once = Enumerable.from(numbers());
+
+once.toArray(); // [1, 2, 3]
+once.toArray(); // []: the generator object is exhausted
+```
+
+**For repeated enumeration of a generator or iterator, use the factory overload:
+`Enumerable.from(() => ...)`. Create a new generator or iterator inside the callback.**
+
+```ts
+const reusable = Enumerable.from(() => numbers());
+
+reusable.toArray(); // [1, 2, 3]
+reusable.toArray(); // [1, 2, 3]
+
+const query = reusable.where(value => value > 1).select(value => value * 10);
+
+query.toArray(); // [20, 30]
+query.toArray(); // [20, 30]
+
+const values = new Set([1, 2, 3]);
+const entries = Enumerable.from(() => values.entries());
+
+entries.toArray(); // [[1, 1], [2, 2], [3, 3]]
+entries.toArray(); // [[1, 1], [2, 2], [3, 3]]
+```
+
+Returning an existing iterator from the callback still shares its consumption position:
+
+```ts
+const iterator = numbers();
+const stillOnce = Enumerable.from(() => iterator);
+
+stillOnce.toArray(); // [1, 2, 3]
+stillOnce.toArray(); // []: the callback returns the same iterator
+```
+
+Early termination matters too: calling `any()`, `first()`, or `take(1).toArray()` on a
+wrapped generator object closes that generator, so later enumeration returns no values.
+Use a factory if you need to enumerate again after these operations.
+
+With a factory, you rerun the generator and query callbacks on each enumeration, including
+their side effects. Results can change if the underlying data changes. To reuse cached
+values, call `memoize()` before consuming the sequence. Calling `share()` instead opts
+into sharing one forward-only iterator among consumers.
+
 ## Tutorial
 
 Build the package and run the TypeScript tutorial:
